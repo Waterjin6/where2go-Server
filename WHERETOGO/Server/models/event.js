@@ -30,7 +30,7 @@ export const getRecommandEventsInfos = (sex, age, result) => {
     var qr = 'select eventID, eventName, startDate, endDate, (select count(*) from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID)as visitedNum, (select count(*) from userSavedTBL where UserSavedTBL.eventID = EventTBL.eventID) as savedNum, (select cName from CategoryTBL where CategoryTBL.cCode = EventTBL.kind) as kind, pic, (select count(*) from userSavedTBL where UserSavedTBL.eventID = EventTBL.eventID ';  
           
     if(sex == 'w'){
-        qr += ' and UserSavedTBL.userID in (select userID from userTBL where sex = "w" ';
+        qr += ' and UserSavedTBL.userID in (select userID from UserTBL where sex = "w" ';
         if(age == 1)qr += ' and age = "1" ';
          else if (age == 2)qr += ' and age = "2" ';
          else if (age == 3)qr += ' and age = "3" ';
@@ -39,7 +39,7 @@ export const getRecommandEventsInfos = (sex, age, result) => {
          qr += ' ) ';
     }
             else if (sex == 'm') {
-                qr += ' and UserSavedTBL.userID in (select userID from userTBL where sex = "m" ';
+                qr += ' and UserSavedTBL.userID in (select userID from UserTBL where sex = "m" ';
                 if(age == 1)qr += ' and age = "1" ';
                 else if (age == 2)qr += ' and age = "2" ';
                 else if (age == 3)qr += ' and age = "3" ';
@@ -67,14 +67,14 @@ export const getRecommandEventsInfos = (sex, age, result) => {
 }
 
 export const getUserTopContents = (uid, result) => { 
-    db.query("select sex, age from userTBL where userID = ?;",[uid], (err, userInfo) => {             
+    db.query("select sex, age from UserTBL where userID = ?;",[uid], (err, userInfo) => {             
         if(err) {
             result(500, err, null);
         } else { 
             var qr = 'select eventID, eventName, startDate, endDate, (select count(*) from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID)as visitedNum, (select count(*) from userSavedTBL where UserSavedTBL.eventID = EventTBL.eventID) as savedNum, (select cName from CategoryTBL where CategoryTBL.cCode = EventTBL.kind) as kind, pic, (select count(*) from userSavedTBL where UserSavedTBL.eventID = EventTBL.eventID ';  
             
             if(userInfo[0].sex == 'w'){
-                qr += ' and UserSavedTBL.userID in (select userID from userTBL where sex = "w" ';
+                qr += ' and UserSavedTBL.userID in (select userID from UserTBL where sex = "w" ';
                 if(userInfo[0].age == 1)qr += ' and age = "1" ';
                 else if (userInfo[0].age == 2)qr += ' and age = "2" ';
                 else if (userInfo[0].age == 3)qr += ' and age = "3" ';
@@ -83,7 +83,7 @@ export const getUserTopContents = (uid, result) => {
                 qr += ' ) ';
             }
             else if (userInfo[0].sex == 'm') {
-                qr += ' and UserSavedTBL.userID in (select userID from userTBL where sex = "m" ';
+                qr += ' and UserSavedTBL.userID in (select userID from UserTBL where sex = "m" ';
                 if(userInfo[0].age == 1)qr += ' and age = "1" ';
                 else if (userInfo[0].age == 2)qr += ' and age = "2" ';
                 else if (userInfo[0].age == 3)qr += ' and age = "3" ';
