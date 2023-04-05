@@ -129,7 +129,7 @@ export const getEventByEventID = (id, result) => {
   
 
 export const getEventUserInfos= (uid, eid, result) => {
-    db.query("select * from userVisitedTBL where userID = ? and eventID = ?;", [uid, eid],(err, cntV) => {             
+    db.query("select * from UserVisitedTBL where userID = ? and eventID = ?;", [uid, eid],(err, cntV) => {             
         if(err) {
             result(500, {
                  isSuccess : false,
