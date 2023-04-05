@@ -1,7 +1,7 @@
 import db from "../config/dbConnection.js";
 
 export const getMainBoardContents = (result) => {
-    db.query("Select mainEventID, ment, prePic, eventID from mainEventTBL;", (err, results) => {             
+    db.query("Select mainEventID, ment, prePic, eventID from MainEventTBL;", (err, results) => {             
         if(err) {
             result(500, err, null);
         } else {
