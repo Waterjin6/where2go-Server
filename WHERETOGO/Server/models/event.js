@@ -14,7 +14,7 @@ export const getMainBoardContents = (result) => {
 }
 
 export const getTopContents = (result) => { 
-    db.query("Select  eventID, eventName, (select cName from CategoryTBL where CategoryTBL.cCode = EventTBL.kind) as kind, startDate, endDate,  pic, (select count(*) from userSavedTBL where UserSavedTBL.eventID = EventTBL.eventID) as totalSavedNum,(select count(*) from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID)as visitedNum from EventTBL ORDER BY totalSavedNum DESC LIMIT 5;", (err, results) => {             
+    db.query("Select  eventID, eventName, (select cName from CategoryTBL where CategoryTBL.cCode = EventTBL.kind) as kind, startDate, endDate,  pic, (select count(*) from UserSavedTBL where UserSavedTBL.eventID = EventTBL.eventID) as totalSavedNum,(select count(*) from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID)as visitedNum from EventTBL ORDER BY totalSavedNum DESC LIMIT 5;", (err, results) => {             
         if(err) {
             result(500, err, null);
         } else {
@@ -27,7 +27,7 @@ export const getTopContents = (result) => {
 }
 
 export const getRecommandEventsInfos = (sex, age, result) => {        
-    var qr = 'select eventID, eventName, startDate, endDate, (select count(*) from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID)as visitedNum, (select count(*) from userSavedTBL where UserSavedTBL.eventID = EventTBL.eventID) as savedNum, (select cName from CategoryTBL where CategoryTBL.cCode = EventTBL.kind) as kind, pic, (select count(*) from userSavedTBL where UserSavedTBL.eventID = EventTBL.eventID ';  
+    var qr = 'select eventID, eventName, startDate, endDate, (select count(*) from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID)as visitedNum, (select count(*) from UserSavedTBL where UserSavedTBL.eventID = EventTBL.eventID) as savedNum, (select cName from CategoryTBL where CategoryTBL.cCode = EventTBL.kind) as kind, pic, (select count(*) from UserSavedTBL where UserSavedTBL.eventID = EventTBL.eventID ';  
           
     if(sex == 'w'){
         qr += ' and UserSavedTBL.userID in (select userID from UserTBL where sex = "w" ';
@@ -71,7 +71,7 @@ export const getUserTopContents = (uid, result) => {
         if(err) {
             result(500, err, null);
         } else { 
-            var qr = 'select eventID, eventName, startDate, endDate, (select count(*) from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID)as visitedNum, (select count(*) from userSavedTBL where UserSavedTBL.eventID = EventTBL.eventID) as savedNum, (select cName from CategoryTBL where CategoryTBL.cCode = EventTBL.kind) as kind, pic, (select count(*) from userSavedTBL where UserSavedTBL.eventID = EventTBL.eventID ';  
+            var qr = 'select eventID, eventName, startDate, endDate, (select count(*) from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID)as visitedNum, (select count(*) from UserSavedTBL where UserSavedTBL.eventID = EventTBL.eventID) as savedNum, (select cName from CategoryTBL where CategoryTBL.cCode = EventTBL.kind) as kind, pic, (select count(*) from UserSavedTBL where UserSavedTBL.eventID = EventTBL.eventID ';  
             if(userInfo[0] == undefined){
                 qr += ') as userTopNum from EventTBL ORDER BY userTopNum DESC LIMIT 5;';}
             else {
@@ -115,7 +115,7 @@ export const getUserTopContents = (uid, result) => {
 }
   
 export const getEventByEventID = (id, result) => { 
-    db.query("select EventTBL.eventID,EventTBL.eventName,EventTBL.startDate, (select count(*) from userSavedTBL where UserSavedTBL.eventID = EventTBL.eventID) as savedNum,(select count(*) from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID)as visitedNum , EventTBL.endDate, categoryTBL.cName as kind, EventTBL.pic, areaCodeTBL.aName, areaCodeDetailTBL.aDName, EventTBL.addr1 as place, EventTBL.addr2 as detailedPlace, EventTBL.mapx,EventTBL.mapy,EventTBL.mlevel,tel, EventTBL.homepage, EventTBL.overview, EventTBL.agelimit, EventTBL.eventtime, EventTBL.eventplace,EventTBL.bookingplace, EventTBL.subevent, EventTBL.price from EventTBL, categoryTBL,areaCodeTBL,areaCodeDetailTBL where EventTBL.kind = categoryTBL.cCode and EventTBL.areacode = areaCodeTBL.aCode and areaCodeDetailTBL.aDCode = EventTBL.sigungucode and eventID = ?;", [id], (err, results) => {             
+    db.query("select EventTBL.eventID,EventTBL.eventName,EventTBL.startDate, (select count(*) from UserSavedTBL where UserSavedTBL.eventID = EventTBL.eventID) as savedNum,(select count(*) from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID)as visitedNum , EventTBL.endDate, categoryTBL.cName as kind, EventTBL.pic, AreaCodeTBL.aName, AreaCodeDetailTBL.aDName, EventTBL.addr1 as place, EventTBL.addr2 as detailedPlace, EventTBL.mapx,EventTBL.mapy,EventTBL.mlevel,tel, EventTBL.homepage, EventTBL.overview, EventTBL.agelimit, EventTBL.eventtime, EventTBL.eventplace,EventTBL.bookingplace, EventTBL.subevent, EventTBL.price from EventTBL, categoryTBL,AreaCodeTBL,AreaCodeDetailTBL where EventTBL.kind = categoryTBL.cCode and EventTBL.areacode = AreaCodeTBL.aCode and AreaCodeDetailTBL.aDCode = EventTBL.sigungucode and eventID = ?;", [id], (err, results) => {             
         if(err) {
             result(500, err, null);
         } else {
@@ -139,7 +139,7 @@ export const getEventUserInfos= (uid, eid, result) => {
              }, null);
         }
         else {
-            db.query("select * from userSavedTBL where userID = ? and eventID = ?;", [uid, eid],(err, cntS) => {             
+            db.query("select * from UserSavedTBL where userID = ? and eventID = ?;", [uid, eid],(err, cntS) => {             
                 if(err) {
                     result(500, {
                          isSuccess : false,
