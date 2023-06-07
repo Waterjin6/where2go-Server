@@ -1,4 +1,4 @@
-import {getVisitedEvent, addVisitedEvent, deleteVisitedEvent, getIfVisited} from "../models/visited.js";
+import {getVisitedEvent, addVisitedEvent, deleteVisitedEvent, getIfVisited, getReviewDetail} from "../models/visited.js";
 
 
 export const getVisited = (req, res) => {
@@ -12,7 +12,17 @@ export const getVisited = (req, res) => {
     });
 }
 
-  
+export const getReview = (req, res) => {
+    const rid = req.params.reviewID;
+    getReviewDetail(rid,(stat, err, results) => {
+        if (err){
+            res.status(stat).send(err);
+        }else{
+            res.status(stat).json(results);
+        }
+    });
+}
+
 export const setVisited = (req, res) => {
     const uid = req.params.userID;
     const eid = req.params.eventID;

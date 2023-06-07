@@ -3,9 +3,9 @@ import db from "./config/dbConnection.js";
 import fs from 'fs';
 //419개까지 넣음 / 22-09-07 업데이트
 //446개까지 넣음 / 22-09-14 업데이트
-const serviceKey ="QNnTJy6f3sstORUG9MRvZBkU7%2F3vsnIy%2BAgmf%2FKQpuzsI9iC%2FWV7SHiDqrfUrYfDLoJTDX5TAPIQpUD0mGwwFA%3D%3D";
+const serviceKey ="eqgDjMToxJ5qj73QdQ2jGIjirsbAeSH5JzYAeFqaf4EJq6TGC5fvt%2BPSkBXhFsGNXDlazYTP9Pt1yjj1UJV2dg%3D%3D";
 const numOfRows = 1;
-const eventStartDate = "20221024";
+const eventStartDate = "20230606";
 
 
 const pageNo = 1;
@@ -32,7 +32,7 @@ function getLastAmount(){
 var getTotal = {
   'method': 'GET',
   "rejectUnauthorized": false, 
-  'url': 'https://apis.data.go.kr/B551011/KorService/searchFestival?serviceKey=' + serviceKey +'&numOfRows=1&pageNo=1&MobileOS=AND&MobileApp=wheretogo&_type=json&eventStartDate='+eventStartDate+'&arrange=D',
+  'url': 'https://apis.data.go.kr/B551011/KorService1/searchFestival1?serviceKey=' + serviceKey +'&numOfRows=1&pageNo=1&MobileOS=AND&MobileApp=wheretogo&_type=json&eventStartDate='+eventStartDate+'&arrange=D',
   'headers': {
   },
   form: {
@@ -43,7 +43,7 @@ var getTotal = {
 var getInfo = {
   'method': 'GET',
   "rejectUnauthorized": false, 
-  'url': 'https://apis.data.go.kr/B551011/KorService/searchFestival?serviceKey=' + serviceKey +'&numOfRows=1&MobileOS=AND&MobileApp=wheretogo&_type=json&eventStartDate='+eventStartDate+'&arrange=D&pageNo=',
+  'url': 'https://apis.data.go.kr/B551011/KorService1/searchFestival1?serviceKey=' + serviceKey +'&numOfRows=1&MobileOS=AND&MobileApp=wheretogo&_type=json&eventStartDate='+eventStartDate+'&arrange=D&pageNo=',
   'headers': {
   },
   form: {
@@ -54,7 +54,7 @@ var getInfo = {
 var getDetailedInfo = { 
   'method': 'GET',
   "rejectUnauthorized": false, 
-  'url': 'https://apis.data.go.kr/B551011/KorService/detailIntro?serviceKey=' + serviceKey +'&numOfRows=1&pageNo=1&MobileOS=AND&MobileApp=wheretogo&_type=json&contentTypeId=15&contentId=',
+  'url': 'https://apis.data.go.kr/B551011/KorService1/detailIntro1?serviceKey=' + serviceKey +'&numOfRows=1&pageNo=1&MobileOS=AND&MobileApp=wheretogo&_type=json&contentTypeId=15&contentId=',
   'headers': {
   },
   form: {
@@ -65,7 +65,7 @@ var getDetailedInfo = {
 var getExplainInfo = {
   'method': 'GET',
   "rejectUnauthorized": false, 
-  'url' : 'https://apis.data.go.kr/B551011/KorService/detailCommon?MobileOS=AND&MobileApp=wheretogo&serviceKey=' + serviceKey + '&_type=json&defaultYN=Y&overviewYN=Y&contentId=',
+  'url' : 'https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=AND&MobileApp=wheretogo&serviceKey=' + serviceKey + '&_type=json&defaultYN=Y&overviewYN=Y&contentId=',
   'headers': {
   },
   form: {
@@ -88,7 +88,7 @@ function getTotalNum(){
 
 function makeQr(i){
   return new Promise((res, rej) => {
-  getInfo.url = 'https://apis.data.go.kr/B551011/KorService/searchFestival?serviceKey=' + serviceKey +'&numOfRows=1&MobileOS=AND&MobileApp=wheretogo&_type=json&eventStartDate=20220817&arrange=D&pageNo=';
+  getInfo.url = 'https://apis.data.go.kr/B551011/KorService1/searchFestival1?serviceKey=' + serviceKey +'&numOfRows=1&MobileOS=AND&MobileApp=wheretogo&_type=json&eventStartDate='+ eventStartDate +'&arrange=D&pageNo=';
   getInfo.url += i;
 
   request(getInfo, function (error, response, body) {
@@ -144,7 +144,7 @@ function makeQr(i){
 
 function makeEqr(eventID){
   return new Promise((res, rej) => {
-  getExplainInfo.url = 'https://apis.data.go.kr/B551011/KorService/detailCommon?MobileOS=AND&MobileApp=wheretogo&serviceKey=' + serviceKey + '&_type=json&defaultYN=Y&overviewYN=Y&contentId=';
+  getExplainInfo.url = 'https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=AND&MobileApp=wheretogo&serviceKey=' + serviceKey + '&_type=json&defaultYN=Y&overviewYN=Y&contentId=';
       getExplainInfo.url += eventID;
       request(getExplainInfo, function (err, response, bd) {
       if (err) throw new Error(err);
@@ -173,7 +173,7 @@ function makeEqr(eventID){
 
 function makeDqr(eventID){
   return new Promise((res, rej) => {
-  getDetailedInfo.url = 'https://apis.data.go.kr/B551011/KorService/detailIntro?serviceKey=' + serviceKey +'&numOfRows=1&pageNo=1&MobileOS=AND&MobileApp=wheretogo&_type=json&contentTypeId=15&contentId=';
+  getDetailedInfo.url = 'https://apis.data.go.kr/B551011/KorService1/detailIntro1?serviceKey=' + serviceKey +'&numOfRows=1&pageNo=1&MobileOS=AND&MobileApp=wheretogo&_type=json&contentTypeId=15&contentId=';
         getDetailedInfo.url += eventID;
         request(getDetailedInfo, function (err, response, dbd) {
           if (err) throw new Error(err);
@@ -233,9 +233,9 @@ async function getEveryEvent(){
       if (err) throw err;
       console.log('The '+ (i - 1)  +'th'+ ' was appended to file!');
     });
-
-    return ;
   }
+
+  return;
 
 }
 

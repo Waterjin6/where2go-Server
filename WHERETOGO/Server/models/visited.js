@@ -1,7 +1,7 @@
 import db from "../config/dbConnection.js";
 
 export const getVisitedEvent = (uid, result) => {
-    db.query("Select  eventID, eventName, (select cName from CategoryTBL where CategoryTBL.cCode = EventTBL.kind) as kind, startDate, endDate,  pic, (select count(*) from UserSavedTBL where UserSavedTBL.eventID = EventTBL.eventID) as savedNum,(select count(*) from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID)as visitedNum,(select assessment from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID and UserVisitedTBL.userID = ?)as assessment from EventTBL where eventID in (SELECT eventID from UserVisitedTBL where userID = ?);",[uid, uid], (err, results) => {             
+    db.query("Select  visitedID, eventID, (select eventName from EventTBL where EventTBL.eventID = UserVisitedTBL.eventID) as eventName, (select cName from CategoryTBL where CategoryTBL.cCode = EventTBL.kind) as kind, startDate, endDate,  pic, (select count(*) from UserSavedTBL where UserSavedTBL.eventID = EventTBL.eventID) as savedNum,(select count(*) from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID)as visitedNum,(select assessment from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID and UserVisitedTBL.userID = ?)as assessment from EventTBL where eventID in (SELECT eventID from UserVisitedTBL where userID = ?);",[uid, uid], (err, results) => {             
         if(err) {
             console.log(err);
             result(500, {
@@ -22,6 +22,32 @@ export const getVisitedEvent = (uid, result) => {
                 code : 200,
                 isSuccess : true,
                 userID : uid,
+                results});
+        }
+    });    
+}
+
+export const getReviewDetail = (rid, result) => {
+    db.query("select userID, eventID, (select eventName from EventTBL where EventTBL.eventID = UserVisitedTBL.eventID) as eventName, isPrivate, (select count(*) from ReviewLikeTBL where ReviewLikeTBL.visitedID = ?) as likeNum, star, (select content from CompanionTBL where CompanionTBL.cpID = UserVisitedTBL.companionID) as companion,pic1,pic2,pic3,pic4,pic5,pic6,pic7,pic8,pic9,pic10,review from UserVisitedTBL where visitedID = ?;",[rid, rid], (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(500, {
+                msg : "오류가 발생하였습니다.",
+                code : 500, 
+                err
+            }, null);
+        } else if (!results.length){
+            result(200, null, {
+                msg : "존재하지 않는 리뷰입니다.",
+                code : 204,
+                isSuccess : true
+            })
+        }
+        else {
+            result(200, null, {
+                msg : "리뷰를 불러옵니다",
+                code : 200,
+                isSuccess : true,
                 results});
         }
     });    
