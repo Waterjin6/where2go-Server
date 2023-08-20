@@ -1,6 +1,6 @@
 import jwtMiddleware from "../config/jwtMiddleware.js";
-const userProvider = "./userProvider.js";
-const userServicer = "./userServicer.js";
+import "./userProvider.js";
+import * as userServicer from "./userServicer.js";
 const baseResponse = "../config/baseResponseStatus.js";
 import regexEmail from "regex-email";
 
@@ -20,22 +20,21 @@ export const loginUser = async function(req, res) {
 
 export const registerUser = async function(req, res) {
 
-    var {email, password, nickName, age, sex} = req.body;
+    const {email, password, nickName, age, sex} = req.body;
     if(!email)return res.send(errResponse(baseResponse.USER_USEREMAIL_EMPTY));
     if(!password)return res.send(errResponse(baseResponse.USER_PASSWORD_EMPTY));
     if(!nickName)return res.send(errResponse(baseResponse.USER_NICKNAME_EMPTY));
-    if(!age) age = -1;
-    if(!sex) sex = "d";
-
-    if (!regexEmail.test(email)) return res.send(response(baseResponse.SIGNUP_EMAIL_ERROR_TYPE));
+    
+    if(!regexEmail.test(email)) return res.send(response(baseResponse.SIGNUP_EMAIL_ERROR_TYPE));
 
     const signUpResponse = await userServicer.createUser(
-        email,
+        email, 
         password,
         nickName,
         age,
         sex
-    );    
+    );
+
     return res.send(signUpResponse);
 
 };

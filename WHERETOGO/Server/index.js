@@ -9,7 +9,7 @@ import multer from "multer";
 
 // import routes
 import eventRouter from "./routers/eventRouter.js";
-import userRouter from "./routers/userRouter.js";
+import userRouter from "./User/userRouter.js";
 import keywordRouter from "./routers/keywordRouter.js";
 import searchRouter from "./routers/searchRouter.js";
 import visitedRouter from "./Visited/visitedRouter.js";
