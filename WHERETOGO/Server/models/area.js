@@ -1,4 +1,4 @@
-import db from "../config/dbConnection.js";
+import db from "../config/database.js";
 
 export const getBigContent = (areacode, result) => { 
     db.query("select aName from AreaCodeTBL where aCode = ?;", [areacode], (err, results) => {             

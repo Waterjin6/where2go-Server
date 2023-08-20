@@ -1,4 +1,4 @@
-import db from "../config/dbConnection.js";
+import db from "../config/database.js";
 
 export const getCalendarEvents = (uid, result) => {
     db.query("Select eventID, eventName, startDate, endDate from EventTBL where eventID in (SELECT eventID from UserSavedTBL where userID = ?);",[uid], (err, results) => {             

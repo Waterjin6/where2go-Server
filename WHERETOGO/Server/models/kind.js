@@ -1,4 +1,4 @@
-import db from "../config/dbConnection.js";
+import db from "../config/database.js";
 
 export const getKindContent = (kind, result) => { 
     db.query("select cName from CategoryTBL where cCode = ?;", [kind], (err, results) => {             

@@ -1,4 +1,4 @@
-import db from "../config/dbConnection.js";
+import db from "../config/database.js";
 
 export const getVisitedEvent = (uid, result) => {
     db.query("Select  visitedID, (select pic from EventTBL where EventTBL.eventID = UserVisitedTBL.eventID) as pic from UserVisitedTBL where userID = ?;",[uid], (err, results) => {             

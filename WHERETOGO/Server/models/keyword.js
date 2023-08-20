@@ -1,4 +1,4 @@
-import db from "../config/dbConnection.js";
+import db from "../config/database.js";
 
 export const getUserKeywordByID = (uid, result) => {
     db.query("select content from keywordTBL where userID = ? ;", [uid], (err, results) => {             

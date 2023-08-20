@@ -1,28 +1,77 @@
-const alarm = require("./visitedController");
-module.exports = function(app){
+import jwtMiddleware from "../config/jwtMiddleware.js";
+const visitedProvider = "./visitedProvider.js";
+const visitedServicer = "./visitedServicer.js";
+const baseResponse = "../config/baseResponseStatus.js";
+import {response, errResponse} from "../config/response.js";
 
-    const alarm = require('./visitedController');
-    const jwtMiddleware = require('../../../config/jwtMiddleware');
+export const getVisited = async function(req, res) {
+    const userIdFromJWT = req.verifiedToken.userIdx;
+    const userIdx = req.params.userID;
+    
+    if(!userIdx)return res.send(errResponse(baseResponse.USER_IDX_EMPTY));
 
-    app.patch('/app/alarm/all/on/:userIdx',jwtMiddleware, alarm.allAlarmOn);
+    const VisitedList = await visitedProvider.getVisitedEvent(uid);
+    if (!VisitedList) return res.send(response(baseResponse.USER_VISITED_EVENT_EMPTY));
+    return res.send(response(baseResponse.SUCCESS, VisitedList));
 
-    app.patch('/app/alarm/all/off/:userIdx',jwtMiddleware, alarm.allAlarmOff);
+}
+/*
+export const getVisited = (req, res) => {
+    const uid = req.params.userID;
+    getVisitedEvent(uid, (stat, err, results) => {
+        if (err){
+            res.status(stat).send(err);
+        }else{
+            res.status(stat).json(results);
+        }
+    });
+}
+*/
+export const getReview = (req, res) => {
+    const rid = req.params.reviewID;
+    getReviewDetail(rid,(stat, err, results) => {
+        if (err){
+            res.status(stat).send(err);
+        }else{
+            res.status(stat).json(results);
+        }
+    });
+}
 
-    app.patch('/app/alarm/habitCheck/on/:userIdx',jwtMiddleware, alarm.habitCheckAlarmOn);
+export const setVisited = (req, res) => {
+    const uid = req.params.userID;
+    const eid = req.params.eventID;
+    const ass = req.params.assess;
+    addVisitedEvent(uid, eid, ass,(stat, err, results) => {
+        if (err){
+            res.status(stat).send(err);
+        }else{
+            res.status(stat).json(results);
+        }
+    });
+}
+  
 
-    app.patch('/app/alarm/habitCheck/off/:userIdx',jwtMiddleware,alarm.habitCheckAlarmOff);
+export const deleteVisited = (req, res) => {
+    const uid = req.params.userID;
+    const eid = req.params.eventID;
+    deleteVisitedEvent(uid, eid, (stat, err, results) => {
+        if (err){
+            res.status(stat).send(err);
+        }else{
+            res.status(stat).json(results);
+        }
+    });
+}
 
-    app.patch('/app/alarm/habitInvite/on/:userIdx',jwtMiddleware, alarm.habitInviteAlarmOn);
-
-    app.patch('/app/alarm/habitInvite/off/:userIdx',jwtMiddleware, alarm.habitInviteAlarmOff);
-
-    app.patch('/app/alarm/friendRequest/on/:userIdx',jwtMiddleware, alarm.friendRequestAlarmOn);
-
-    app.patch('/app/alarm/friendRequest/off/:userIdx',jwtMiddleware, alarm.friendRequestAlarmOff);
-
-    app.patch('/app/alarm/friendAward/on/:userIdx',jwtMiddleware, alarm.friendAwardAlarmOn);
-
-    app.patch('/app/alarm/friendAward/off/:userIdx',jwtMiddleware, alarm.friendAwardAlarmOff);
-
-    app.get('/app/alarm/show/:userIdx',jwtMiddleware,alarm.getAlarm);
-};
+export const checkVisited = (req, res) => {
+    const uid = req.params.userID;
+    const eid = req.params.eventID;
+    getIfVisited(uid, eid, (stat, err, results) => {
+        if (err){
+            res.status(stat).send(err);
+        }else{
+            res.status(stat).json(results);
+        }
+    });
+}

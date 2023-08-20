@@ -1,6 +1,6 @@
 import express from 'express';
 const testRouter = express.Router();
-import db from '../config/dbConnection.js';
+import db from '../config/database.js';
 
 //import { hashSync, genSaltSync, compareSync } from "bcrypt";
 import bcrypt from 'bcryptjs';

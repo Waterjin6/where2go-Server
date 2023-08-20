@@ -1,4 +1,4 @@
-import db from "../config/dbConnection.js";
+import db from "../config/database.js";
 
 export const getMainBoardContents = (result) => {
     db.query("Select mainEventID, ment, prePic, eventID from MainEventTBL;", (err, results) => {             
