@@ -1,12 +1,35 @@
 import jwtMiddleware from "../config/jwtMiddleware.js";
-import "./userProvider.js";
+import * as userProvider from "./userProvider.js";
 import * as userServicer from "./userServicer.js";
-const baseResponse = "../config/baseResponseStatus.js";
+import * as baseResponse from "../config/baseResponseStatus.js";
 import regexEmail from "regex-email";
 
 import {response, errResponse} from "../config/response.js";
 
-export const loginUser = async function(req, res) {
+export async function patchUsersNickName(req, res) {
+
+    // jwt - userId, path variable :userId
+
+    const userIdFromJWT = req.verifiedToken.userIdx;
+
+    const uid = req.params.userIdx;
+    const nickName = req.body.nickName;
+
+    if (!uid) return res.send(errResponse(baseResponse.USER_IDX_EMPTY));
+
+    if (!nickName)
+        return res.send(response(baseResponse.USER_NICKNAME_EMPTY));
+    
+    if (userIdFromJWT != uid) {
+        res.send(errResponse(baseResponse.USER_ID_NOT_MATCH));
+    } else {
+        const editUserInfoNickName = await userServicer.editUserNN(uid, nickName);
+        return res.send(editUserInfoNickName);
+    }
+};
+
+
+export async function loginUser (req, res) {
 
     const {email, password} = req.body;
 
@@ -18,7 +41,7 @@ export const loginUser = async function(req, res) {
     return res.send(signInResponse);
 };
 
-export const registerUser = async function(req, res) {
+export async function registerUser (req, res) {
 
     const {email, password, nickName, age, sex} = req.body;
     if(!email)return res.send(errResponse(baseResponse.USER_USEREMAIL_EMPTY));

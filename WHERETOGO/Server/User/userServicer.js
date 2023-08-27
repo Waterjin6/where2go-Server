@@ -12,6 +12,21 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import connect from "http2";
 
+export async function editUserNN (uid, nickName) {
+    try {
+        console.log(uid);
+        const connection = await pool.getConnection(async (conn) => conn);
+        const editNNUserResult = await userDao.updateUserNN(connection, uid, nickName);
+        connection.release();
+
+        return response(baseResponse.SUCCESS);
+
+    } catch (err) {
+        logger.error(`App - editUserNN Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+}
+
 export async function createUser (email, password, nickName, age, sex) {
     try {
 
@@ -91,3 +106,4 @@ export async function postSignIn (email, password) {
         return errResponse(baseResponse.DB_ERROR);
     }
 }
+

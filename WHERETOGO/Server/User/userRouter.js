@@ -9,21 +9,20 @@ import * as userController from "./userController.js";
 // init express router
 const userRouter = express.Router();
   
+userRouter.patch('/changeN/:userID', jwtMiddleware, userController.changeUserNInfo);
   
-//userRouter.patch('/changeN/:userID', jwtMiddleware, changeUserNInfo);
-  
-//userRouter.patch('/changeP/:userID', jwtMiddleware, changeUserPInfo);
+userRouter.patch('/changeP/:userID', jwtMiddleware, userController.changeUserPInfo);
 
-//userRouter.delete('/unregister/:userID', jwtMiddleware, deleteUser);
+userRouter.delete('/unregister/:userID', jwtMiddleware, userController.deleteUser);
 
-//userRouter.post('/check-pw/:userID', jwtMiddleware, getUserPW);
+userRouter.post('/check-pw/:userID', jwtMiddleware, userController.getUserPW);
 
-// userRouter.get('/get-nickname/:userID', jwtMiddleware, getUserNN);
+userRouter.get('/get-nickname/:userID', jwtMiddleware, userController.getUserNN);
 
 userRouter.post('/sign-up', userController.registerUser);
 
 userRouter.post('/login', userController.loginUser);
 
-// userRouter.post('/auto-login', jwtMiddleware, autoLogin);
+userRouter.post('/auto-login', jwtMiddleware, userController.autoLogin); 
 
 export default userRouter;

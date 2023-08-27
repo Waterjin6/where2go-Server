@@ -50,3 +50,12 @@ export async function selectUserPassword(connection, selectUserPasswordParams) {
 
   return selectUserPasswordRow;
 }
+
+export async function updateUserNN(connection, uid, nickName) {
+  const updateUserQuery = `
+  UPDATE UserTBL 
+  SET nickName = ?
+  WHERE userID = ?;`;
+  const updateUserRow = await connection.query(updateUserQuery, [nickName, uid]);
+  return updateUserRow[0];
+}
