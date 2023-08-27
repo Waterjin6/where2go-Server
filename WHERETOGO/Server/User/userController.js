@@ -28,6 +28,27 @@ export async function patchUsersNickName(req, res) {
     }
 };
 
+export async function patchUsersPw(req, res) {
+
+    // jwt - userId, path variable :userId
+
+    const userIdFromJWT = req.verifiedToken.userIdx;
+
+    const uid = req.params.userIdx;
+    const password = req.body.password;
+
+    if (!uid) return res.send(errResponse(baseResponse.USER_IDX_EMPTY));
+
+    if (!password)
+        return res.send(response(baseResponse.USER_PASSWORD_EMPTY));
+    
+    if (userIdFromJWT != uid) {
+        res.send(errResponse(baseResponse.USER_ID_NOT_MATCH));
+    } else {
+        const editUserInfoPW = await userServicer.editUserPW(uid, password);
+        return res.send(editUserInfoPW);
+    }
+};
 
 export async function loginUser (req, res) {
 
@@ -60,4 +81,58 @@ export async function registerUser (req, res) {
 
     return res.send(signUpResponse);
 
+};
+
+export async function deleteUser (req, res) {
+
+    // jwt - userId, path variable :userId
+    
+    const userIdFromJWT = req.verifiedToken.userIdx;
+    const userId = req.params.userID;
+
+    if (!userId)
+        return res.send(response(baseResponse.USER_IDX_EMPTY));
+        
+    if (userIdFromJWT != userId) {
+        res.send(errResponse(baseResponse.USER_ID_NOT_MATCH));
+    } else {
+        const unregisterUser = await userService.unregisterUser(userId);
+        return res.send(unregisterUser);
+    }
+};
+
+export async function getUserPW(req, res) {
+
+    // jwt - userId, path variable :userId
+
+    const uid = req.params.userIdx;
+    const password = req.body.password;
+
+    if (!uid) return res.send(errResponse(baseResponse.USER_IDX_EMPTY));
+
+    if (!password)
+        return res.send(response(baseResponse.USER_PASSWORD_EMPTY));
+    
+    
+    const editUserInfoPW = await userServicer.checkUserPW(uid, password);
+    return res.send(editUserInfoPW);
+};
+
+export async function getUserNN(req, res) {
+
+    // jwt - userId, path variable :userId
+
+    const uid = req.params.userIdx;
+
+    if (!uid) return res.send(errResponse(baseResponse.USER_IDX_EMPTY));
+    
+    
+    const getUserInfoNN = await userProvider.getUserNN(uid);
+    return res.send(getUserInfoNN);
+};
+
+export async function autoLogin (req, res) {
+    const userIdResult = req.verifiedToken.userIdx;
+    console.log(userIdResult);
+    return res.send(response(baseResponse.TOKEN_VERIFICATION_SUCCESS));
 };

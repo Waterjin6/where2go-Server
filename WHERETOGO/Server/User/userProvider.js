@@ -19,6 +19,14 @@ export async function emailCheck (email) {
     return userAccountResult;
   };
 
+  export async function userExistCheck (uid) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const userIDResult = await userDao.selectUserID(connection, uid);
+    connection.release();
+  
+    return userIDResult;
+  };
+
   export async function passwordCheck (selectUserPasswordParams) {
     const connection = await pool.getConnection(async (conn) => conn);
     const passwordCheckResult = await userDao.selectUserPassword(
@@ -27,4 +35,21 @@ export async function emailCheck (email) {
     );
     connection.release();
     return passwordCheckResult[0];
+  };
+
+  export async function checkPasswordBool (uid, hashedPassword) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const passwordCheckResult = await userDao.checkUserPassword(
+        uid,
+        hashedPassword
+    );
+    connection.release();
+    return passwordCheckResult[0];
+  };
+
+  export async function  getUserNN (uid) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const getUserNickNameResult = await userDao.getUserNickname(uid);
+    connection.release();
+    return getUserNickNameResult[0];
   };

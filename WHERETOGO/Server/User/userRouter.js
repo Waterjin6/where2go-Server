@@ -9,13 +9,13 @@ import * as userController from "./userController.js";
 // init express router
 const userRouter = express.Router();
   
-userRouter.patch('/changeN/:userID', jwtMiddleware, userController.changeUserNInfo);
+userRouter.patch('/changeN/:userID', jwtMiddleware, userController.patchUsersNickName);
   
-userRouter.patch('/changeP/:userID', jwtMiddleware, userController.changeUserPInfo);
+userRouter.patch('/changeP/:userID', jwtMiddleware, userController.patchUsersPw);
 
 userRouter.delete('/unregister/:userID', jwtMiddleware, userController.deleteUser);
 
-userRouter.post('/check-pw/:userID', jwtMiddleware, userController.getUserPW);
+userRouter.get('/check-pw/:userID', userController.getUserPW);
 
 userRouter.get('/get-nickname/:userID', jwtMiddleware, userController.getUserNN);
 

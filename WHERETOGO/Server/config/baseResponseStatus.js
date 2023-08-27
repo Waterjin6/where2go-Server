@@ -81,4 +81,5 @@ export const DB_ERROR = { "isSuccess": false, "code": 4000, "message": "데이�
 export const SERVER_ERROR = { "isSuccess": false, "code": 4001, "message": "서버 에러" };
 export const SENDGRID_ERROR = { "isSuccess": false, "code": 4002, "message": "이메일 전송 에러" };
 export const USER_VISITED_EVENT_EMPTY = { "isSuccess": true, "code": 5000, "message": "유저가 방문한 이벤트가 없습니다" };
+export const PASSWORD_MATCH = { "isSuccess": true, "code": 5001, "message": "비밀번호가 일치합니다." };
 

@@ -15,6 +15,10 @@ import connect from "http2";
 export async function editUserNN (uid, nickName) {
     try {
         console.log(uid);
+        const userExist = await userProvider.userExistCheck(uid);
+
+        if(userExist == 0)return errResponse(baseResponse.USER_USERID_NOT_EXIST);
+        
         const connection = await pool.getConnection(async (conn) => conn);
         const editNNUserResult = await userDao.updateUserNN(connection, uid, nickName);
         connection.release();
@@ -23,6 +27,25 @@ export async function editUserNN (uid, nickName) {
 
     } catch (err) {
         logger.error(`App - editUserNN Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+};
+
+export async function editUserPW (uid, password) {
+    try {
+        console.log(uid);
+        const userExist = await userProvider.userExistCheck(uid);
+
+        if(userExist == 0)return errResponse(baseResponse.USER_USERID_NOT_EXIST);
+
+        const connection = await pool.getConnection(async (conn) => conn);
+        const editPWUserResult = await userDao.updateUserPW(connection, uid, password);
+        connection.release();
+
+        return response(baseResponse.SUCCESS);
+
+    } catch (err) {
+        logger.error(`App - editUserPW Service error\n: ${err.message}`);
         return errResponse(baseResponse.DB_ERROR);
     }
 }
@@ -90,7 +113,7 @@ export async function postSignIn (email, password) {
         //토큰 생성 Service
         let token = await jwt.sign(
             {
-                userIdx: userInfoRows[0].userIdx,
+                userIdx: userInfoRows[0].userID,
             }, // 토큰의 내용(payload)
             secret_config.jwtsecret, // 비밀키
             {
@@ -107,3 +130,49 @@ export async function postSignIn (email, password) {
     }
 }
 
+export async function unregisterUser (uid) {
+    try {
+        console.log(uid)
+        const userExist = await userProvider.userExistCheck(uid);
+
+        if(userExist == 0)return errResponse(baseResponse.USER_USERID_NOT_EXIST);
+
+        const connection = await pool.getConnection(async (conn) => conn);
+        const unregisterUserResult = await userDao.unregisterUser(connection, uid)
+        connection.release();
+
+        return response(baseResponse.SUCCESS);
+
+    } catch (err) {
+        logger.error(`App - unregisterUser Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+}
+
+export async function checkUserPW (uid, password) {
+    try {
+        const userExist = await userProvider.userExistCheck(uid);
+
+        if(userExist == 0)return errResponse(baseResponse.USER_USERID_NOT_EXIST);
+
+        // 비밀번호 확인
+        const hashedPassword = await crypto
+            .createHash("sha512")
+            .update(password)
+            .digest("hex");
+        
+        const passwordRows = await userProvider.checkPasswordBool(uid, hashedPassword);
+       
+
+        if (passwordRows[0] == undefined) {
+            return errResponse(baseResponse.SIGNIN_PASSWORD_WRONG);
+        }
+
+
+        return response(baseResponse.PASSWORD_MATCH);
+
+    } catch (err) {
+        logger.error(`App - checkUserPW Service error\n: ${err.message} \n${JSON.stringify(err)}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+}
