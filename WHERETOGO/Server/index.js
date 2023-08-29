@@ -16,7 +16,7 @@ import visitedRouter from "./Visited/visitedRouter.js";
 import savedRouter from "./routers/savedRouter.js";
 import calendarRouter from "./routers/calendarRouter.js";
 import testRouter from "./routers/testRouter.js";
-import kindRouter from "./routers/kindRouter.js";
+import kindRouter from "./Kind/kindRouter.js";
 import areaRouter from "./Area/areaRouter.js";
 
 import dotenv from "dotenv";
