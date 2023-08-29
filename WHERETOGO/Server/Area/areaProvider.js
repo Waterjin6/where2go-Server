@@ -13,49 +13,24 @@ export async function getBigContent (areacode) {
 
 export async function getSmallContent (bigarea, smallarea) {
     const connection = await pool.getConnection(async (conn) => conn);
-    const getSmallContentResult = await areaDao.getBigContentRow(connection, bigarea, smallarea);
+    const getSmallContentResult = await areaDao.getSmallContentRow(connection, bigarea, smallarea);
     connection.release();
   
     return getSmallContentResult[0];
   };
 
-  export async function accountCheck (email) {
+  export async function getListContent () {
     const connection = await pool.getConnection(async (conn) => conn);
-    const userAccountResult = await userDao.selectUserAccount(connection, email);
+    const getListContentResult = await areaDao.getListContentRow(connection);
     connection.release();
   
-    return userAccountResult;
+    return getListContentResult;
   };
 
-  export async function userExistCheck (uid) {
+  export async function getDListContent (areacode) {
     const connection = await pool.getConnection(async (conn) => conn);
-    const userIDResult = await userDao.selectUserID(connection, uid);
+    const getListContentResult = await areaDao.getDListContentRow(connection,areacode);
     connection.release();
   
-    return userIDResult;
-  };
-
-  export async function passwordCheck (selectUserPasswordParams) {
-    const connection = await pool.getConnection(async (conn) => conn);
-    const passwordCheckResult = await userDao.selectUserPassword(
-        connection,
-        selectUserPasswordParams
-    );
-    connection.release();
-    return passwordCheckResult[0];
-  };
-
-  export async function checkPasswordBool (checkPWInfoParams) {
-    const connection = await pool.getConnection(async (conn) => conn);
-    const passwordCheckResult = await userDao.checkUserPassword(connection, checkPWInfoParams);
-    connection.release();
-  
-    return passwordCheckResult[0].count;
-  };
-
-  export async function  getUserNN (uid) {
-    const connection = await pool.getConnection(async (conn) => conn);
-    const getUserNickNameResult = await userDao.getUserNickname(connection, uid);
-    connection.release();
-    return getUserNickNameResult[0];
+    return getListContentResult;
   };

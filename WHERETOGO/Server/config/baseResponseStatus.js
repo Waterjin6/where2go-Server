@@ -86,3 +86,4 @@ export const BIG_AREACODE_EMPTY = { "isSuccess": false, "code": 5002, "message":
 export const SMALL_AREACODE_EMPTY = { "isSuccess": false, "code": 5005, "message": "광역시/도 지역코드를 입력해주세요." };
 export const BIG_AREACODE_NOT_EXIST = { "isSuccess": false, "code": 5003, "message": "광역시/도 지역코드가 존재하지 않습니다." };
 export const SMALL_AREACODE_NOT_EXIST = { "isSuccess": false, "code": 5004, "message": "시/군/구 지역코드가 존재하지 않습니다." };
+export const AREACODE_LIST_ERROR = { "isSuccess": false, "code": 5006, "message": "지역 리스트를 DB에서 불러오지 못했습니다." };
