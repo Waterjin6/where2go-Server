@@ -1,14 +1,22 @@
 import pool from "../config/database.js";
 import logger from "../config/winston.js";
 
-import * as userDao from "./userDao.js";
+import * as areaDao from "./areaDao.js";
 
-export async function emailCheck (email) {
+export async function getBigContent (areacode) {
     const connection = await pool.getConnection(async (conn) => conn);
-    const emailCheckResult = await userDao.selectUserEmail(connection, email);
+    const getBigContentResult = await areaDao.getBigContentRow(connection, areacode);
     connection.release();
   
-    return emailCheckResult[0];
+    return getBigContentResult[0];
+  };
+
+export async function getSmallContent (bigarea, smallarea) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const getSmallContentResult = await areaDao.getBigContentRow(connection, bigarea, smallarea);
+    connection.release();
+  
+    return getSmallContentResult[0];
   };
 
   export async function accountCheck (email) {

@@ -17,7 +17,7 @@ import savedRouter from "./routers/savedRouter.js";
 import calendarRouter from "./routers/calendarRouter.js";
 import testRouter from "./routers/testRouter.js";
 import kindRouter from "./routers/kindRouter.js";
-import areaRouter from "./routers/areaRouter.js";
+import areaRouter from "./Area/areaRouter.js";
 
 import dotenv from "dotenv";
 

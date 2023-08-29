@@ -18,7 +18,7 @@ export async function editUserNN (uid, nickName) {
         const userExist = await userProvider.userExistCheck(uid);
 
         if(userExist == 0)return errResponse(baseResponse.USER_USERID_NOT_EXIST);
-        
+
         const connection = await pool.getConnection(async (conn) => conn);
         const editNNUserResult = await userDao.updateUserNN(connection, uid, nickName);
         connection.release();
@@ -36,10 +36,15 @@ export async function editUserPW (uid, password) {
         console.log(uid);
         const userExist = await userProvider.userExistCheck(uid);
 
+        const hashedPassword = await crypto
+            .createHash("sha512")
+            .update(password)
+            .digest("hex");
+
         if(userExist == 0)return errResponse(baseResponse.USER_USERID_NOT_EXIST);
 
         const connection = await pool.getConnection(async (conn) => conn);
-        const editPWUserResult = await userDao.updateUserPW(connection, uid, password);
+        const editPWUserResult = await userDao.updateUserPW(connection, uid, hashedPassword);
         connection.release();
 
         return response(baseResponse.SUCCESS);
@@ -161,10 +166,12 @@ export async function checkUserPW (uid, password) {
             .update(password)
             .digest("hex");
         
-        const passwordRows = await userProvider.checkPasswordBool(uid, hashedPassword);
+        
+        const checkPWInfoParams = [uid, hashedPassword];
+        const passwordRows = await userProvider.checkPasswordBool(checkPWInfoParams);
        
 
-        if (passwordRows[0] == undefined) {
+        if (passwordRows <= 0) {
             return errResponse(baseResponse.SIGNIN_PASSWORD_WRONG);
         }
 
