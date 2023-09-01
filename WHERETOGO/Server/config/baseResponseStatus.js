@@ -90,4 +90,10 @@ export const AREACODE_LIST_ERROR = { "isSuccess": false, "code": 5006, "message"
 export const KINDCODE_EMPTY = { "isSuccess": false, "code": 5007, "message": "종류 코드를 입력해주세요" };
 export const KIND_LIST_ERROR = { "isSuccess": false, "code": 5008, "message": "종류 리스트를 DB에서 불러오는데에 실패하였습니다." };
 export const KIND_NOT_EXIST = { "isSuccess": false, "code": 5009, "message": "존재하지 않는 종류코드입니다." };
-
+export const MAIN_BOARD_CONTENTS_NOT_EXIST = { "isSuccess": false, "code": 5010, "message": "메인보드에 띄울 컨텐츠가 DB에 존재하지 않습니다." };
+export const TOP_EVENT_LOADING_ERROR = { "isSuccess": false, "code": 5011, "message": "Top이벤트에 띄울 컨텐츠가 DB에 존재하지 않습니다." };
+export const RECOMMAND_EVENT_LOADING_ERROR = { "isSuccess": false, "code": 5012, "message": "성별/연령대별 추천에 띄울 컨텐츠가 DB에 존재하지 않습니다." };
+export const USER_TOP_EVENT_LOADING_ERROR = { "isSuccess": false, "code": 5013, "message": "사용자 성별/연령대별 맞춤 추천 컨텐츠가 DB에 존재하지 않습니다." };
+export const EVENT_ID_EMPTY = { "isSuccess": false, "code": 5014, "message": "이벤트ID를 입력해주세요." };
+export const EVENT_INFO_NOT_EXIST = { "isSuccess": false, "code": 5015, "message": "이벤트ID에 해당하는 이벤트 정보가 존재하지 않습니다." };
+export const EVENT_USER_INFO_ERROR = { "isSuccess": false, "code": 5016, "message": "사용자의 이벤트 방문함/저장함 여부를 확인할 수 없습니다." };

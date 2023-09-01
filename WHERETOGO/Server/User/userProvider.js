@@ -51,3 +51,10 @@ export async function emailCheck (email) {
     connection.release();
     return getUserNickNameResult[0];
   };
+
+  export async function  getUserSexAge (uid) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const getUserSexAgeResult = await userDao.getUserSexAge(connection, uid);
+    connection.release();
+    return getUserSexAgeResult[0];
+  };

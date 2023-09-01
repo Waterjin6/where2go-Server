@@ -111,3 +111,13 @@ export async function getUserNickname(connection, uid) {
 
   return selectUserNN[0];
 }
+
+export async function getUserSexAge(connection, uid) {
+  const selectUserSAQuery = `
+        select sex, age
+        FROM UserTBL 
+        WHERE userID = ?;`;
+  const selectUserSA = await connection.query(selectUserSAQuery,uid);
+
+  return selectUserSA[0];
+}
