@@ -14,7 +14,7 @@ import keywordRouter from "./Keyword/keywordRouter.js";
 import searchRouter from "./routers/searchRouter.js";
 import visitedRouter from "./Visited/visitedRouter.js";
 import savedRouter from "./Saved/savedRouter.js";
-import calendarRouter from "./routers/calendarRouter.js";
+import calendarRouter from "./Calendar/calendarRouter.js";
 import kindRouter from "./Kind/kindRouter.js";
 import areaRouter from "./Area/areaRouter.js";
 
@@ -41,7 +41,6 @@ app.use("/keyword", keywordRouter);
 app.use("/visited", visitedRouter);
 app.use("/saved", savedRouter);
 app.use("/calendar", calendarRouter);
-app.use("/test", testRouter);
 app.use("/kind", kindRouter);
 app.use("/area", areaRouter);
 

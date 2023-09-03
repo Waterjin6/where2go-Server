@@ -13,7 +13,7 @@ export async function getSaved (req, res) {
 
     const getSavedResults = await savedProvider.getSavedList(userIdFromJWT);
 
-    if(!getSavedResults) return res.send(errResponse(baseResponse.SAVED_EVENT_GET_ERROR));
+    if(!getSavedResults) return res.send(errResponse(baseResponse.SAVED_EVENTS_GET_ERROR));
 
     return res.send(response(baseResponse.SUCCESS, getSavedResults));
 }
