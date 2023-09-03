@@ -1,1 +1,3 @@
 {"level":"error","message":"App - insertSaved Service error\n: Cannot add or update a child row: a foreign key constraint fails (`where2godb`.`usersavedtbl`, CONSTRAINT `FK_UserSavedTBL_eventID_EventTBL_eventID` FOREIGN KEY (`eventID`) REFERENCES `eventtbl` (`eventID`) ON DELETE RESTRICT ON UPDATE RESTRICT)","timestamp":"2023-09-03 14:33:12"}
+{"level":"error","message":"App - insertVisited Service error\n: Field 'star' doesn't have a default value","timestamp":"2023-09-03 15:40:55"}
+{"level":"error","message":"App - insertVisited Service error\n: Field 'star' doesn't have a default value","timestamp":"2023-09-03 15:41:36"}

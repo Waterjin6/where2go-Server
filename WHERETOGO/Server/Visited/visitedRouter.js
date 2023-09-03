@@ -1,22 +1,19 @@
-// import express
-import express from "express";
 import jwtMiddleware from "../config/jwtMiddleware.js";
 
-// import function from controller
- import {getVisited, setVisited, deleteVisited, checkVisited, getReview} from "./visitedController.js";
+import express from "express";
+
+import * as visitedController from "./visitedController.js";
 
 // init express router
 const visitedRouter = express.Router();
   
 
-visitedRouter.get('/:userID', jwtMiddleware, getVisited);
-  
-visitedRouter.post('/:userID/:eventID/:assess', jwtMiddleware, setVisited);
-  
-visitedRouter.delete('/:userID/:eventID', jwtMiddleware, deleteVisited);
+visitedRouter.get('/get', jwtMiddleware, visitedController.getVisited);
 
-visitedRouter.get('/check/:userID/:eventID', jwtMiddleware, checkVisited);
+visitedRouter.post('/put/:eventID', jwtMiddleware,visitedController.setVisited);
+  
+visitedRouter.delete('/delete/:eventID', jwtMiddleware, visitedController.deleteVisited);
 
-visitedRouter.get('/review/:reviewID', jwtMiddleware, getReview);
+visitedRouter.get('/check/:eventID', jwtMiddleware, visitedController.checkVisited);
 
 export default visitedRouter;
