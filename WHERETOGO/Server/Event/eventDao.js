@@ -112,3 +112,14 @@ export async function getEventUserSavedInfoRow(connection, eid,uid) {
   
     return getRows[0];
 };
+
+
+export async function getEventExistRow(connection, eid) {
+  
+    const getEventExistQuery = `
+        select count(*) as isExist from EventTBL where eventID = ?; 
+      `;
+    const getRows = await connection.query(getEventExistQuery, eid);
+  
+    return getRows[0];
+};

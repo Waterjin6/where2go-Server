@@ -13,7 +13,7 @@ import userRouter from "./User/userRouter.js";
 import keywordRouter from "./routers/keywordRouter.js";
 import searchRouter from "./routers/searchRouter.js";
 import visitedRouter from "./Visited/visitedRouter.js";
-import savedRouter from "./routers/savedRouter.js";
+import savedRouter from "./Saved/savedRouter.js";
 import calendarRouter from "./routers/calendarRouter.js";
 import testRouter from "./routers/testRouter.js";
 import kindRouter from "./Kind/kindRouter.js";

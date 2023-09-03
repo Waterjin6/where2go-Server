@@ -97,3 +97,7 @@ export const USER_TOP_EVENT_LOADING_ERROR = { "isSuccess": false, "code": 5013, 
 export const EVENT_ID_EMPTY = { "isSuccess": false, "code": 5014, "message": "이벤트ID를 입력해주세요." };
 export const EVENT_INFO_NOT_EXIST = { "isSuccess": false, "code": 5015, "message": "이벤트ID에 해당하는 이벤트 정보가 존재하지 않습니다." };
 export const EVENT_USER_INFO_ERROR = { "isSuccess": false, "code": 5016, "message": "사용자의 이벤트 방문함/저장함 여부를 확인할 수 없습니다." };
+export const EVENT_NOT_SAVED = { "isSuccess": false, "code": 5017, "message": "저장되지 않은 이벤트입니다." };
+export const EVENT_ALREADY_SAVED = { "isSuccess": false, "code": 5018, "message": "이미 저장된 이벤트입니다." };
+export const CHECK_SAVED_EVENT_ERROR = { "isSuccess": false, "code": 5019, "message": "이벤트 저장 여부를 확인할 수 없습니다." };
+export const EVENT_NOT_EXIST = { "isSuccess": false, "code": 5020, "message": "DB에 등록되지않은 이벤트입니다." };

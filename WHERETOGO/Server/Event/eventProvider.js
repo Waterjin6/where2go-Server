@@ -35,6 +35,14 @@ export async function getEventInfo(eid) {
     return getResult;
 };
 
+export async function getEventExist(eid) {
+  const connection = await pool.getConnection(async (conn) => conn);
+  const getResult = await eventDao.getEventExistRow(connection, eid);
+  connection.release();
+
+  return getResult[0].isExist;
+};
+
 export async function getEventUserInfo(eid, uid) {
     const connection = await pool.getConnection(async (conn) => conn);
     const getResultV = await eventDao.getEventUserVisitedInfoRow(connection, eid,uid);
