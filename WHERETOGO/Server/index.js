@@ -11,7 +11,7 @@ import multer from "multer";
 import eventRouter from "./Event/eventRouter.js";
 import userRouter from "./User/userRouter.js";
 import keywordRouter from "./Keyword/keywordRouter.js";
-import searchRouter from "./routers/searchRouter.js";
+import searchRouter from "./Search/searchRouter.js";
 import visitedRouter from "./Visited/visitedRouter.js";
 import savedRouter from "./Saved/savedRouter.js";
 import calendarRouter from "./Calendar/calendarRouter.js";

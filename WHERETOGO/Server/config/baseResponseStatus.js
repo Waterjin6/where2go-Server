@@ -110,3 +110,4 @@ export const KEYWORD_LIST_GET_ERROR = { "isSuccess": false, "code": 5026, "messa
 export const KEYWORD_EMPTY = { "isSuccess": false, "code": 5027, "message": "키워드가 입력되지 않았습니다." };
 export const KEYWORD_ALREADY_EXIST = { "isSuccess": false, "code": 5028, "message": "이미 등록된 키워드입니다." };
 export const KEYWORD_NO_EXIST = { "isSuccess": false, "code": 5029, "message": "등록되지 않은 키워드입니다." };
+export const GET_HOT_SEARCH_ERROR = { "isSuccess": false, "code": 5030, "message": "인기검색어를 불러올 수 없습니다." };
