@@ -12,10 +12,10 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import connect from "http2";
 
-export async function insertVisited(eid, uid) {
+export async function insertVisited(eid, uid, star, companionID, pic, review, isPrivate) {
     try {
         const connection = await pool.getConnection(async (conn) => conn);
-        const putVisitedEvent = await visitedDao.insertVisitedEvent(connection, uid, eid);
+        const putVisitedEvent = await visitedDao.insertVisitedEvent(connection, uid, eid, star, companionID, pic, review, isPrivate);
         connection.release();
 
         return response(baseResponse.SUCCESS);

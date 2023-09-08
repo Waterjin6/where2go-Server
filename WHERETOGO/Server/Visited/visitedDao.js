@@ -12,12 +12,14 @@ export async function getVisitedEventRow(connection, uid){
   return getRows[0];
 };
 
-export async function insertVisitedEvent(connection, uid, eid){
+export async function insertVisitedEvent(connection, uid, eid, star, companionID, pic, review, isPrivate){
 
 const putVisitedEventsQuery = `
-    insert into UserVisitedTBL (userID, eventID) VALUES (?,?); 
+    insert into UserVisitedTBL (userID, eventID, star, companionID, 
+      pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10,
+      review, isPrivate) VALUES (?,?,?,?,?,?,?); 
   `;
-const getRows = await connection.query(putVisitedEventsQuery, [uid, eid]);
+const getRows = await connection.query(putVisitedEventsQuery, [uid, eid, star, companionID, pic, review, isPrivate]);
 
 return getRows[0];
 };

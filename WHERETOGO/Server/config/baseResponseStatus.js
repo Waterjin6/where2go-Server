@@ -111,3 +111,9 @@ export const KEYWORD_EMPTY = { "isSuccess": false, "code": 5027, "message": "키
 export const KEYWORD_ALREADY_EXIST = { "isSuccess": false, "code": 5028, "message": "이미 등록된 키워드입니다." };
 export const KEYWORD_NO_EXIST = { "isSuccess": false, "code": 5029, "message": "등록되지 않은 키워드입니다." };
 export const GET_HOT_SEARCH_ERROR = { "isSuccess": false, "code": 5030, "message": "인기검색어를 불러올 수 없습니다." };
+
+export const STAR_EMPTY = { "isSuccess": false, "code": 5031, "message": "별점이 비었습니다." };
+export const COMPANION_ID_EMPTY = { "isSuccess": false, "code": 5032, "message": "동행자 ID가 비었습니다." };
+export const REVIEW_EMPTY = { "isSuccess": false, "code": 5033, "message": "리뷰가 비었습니다." };
+export const IS_PRIVATE_EMPTY = { "isSuccess": false, "code": 5034, "message": "공개여부가 비었습니다." };
+
