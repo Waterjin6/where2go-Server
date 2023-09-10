@@ -6,6 +6,7 @@ import createError from "http-errors";
 import path from "path";
 
 import multer from "multer";
+import {dir} from "./config/multer.js";
 
 // import routes
 import eventRouter from "./Event/eventRouter.js";
@@ -43,19 +44,8 @@ app.use("/saved", savedRouter);
 app.use("/calendar", calendarRouter);
 app.use("/kind", kindRouter);
 app.use("/area", areaRouter);
+app.use('/images',express.static(dir));
 
-app.use('/asset', express.static('asset'));
-
-
-//app.use("/comm", commRouter);
-//app.use("/foll", followRouter);
-//app.use("/cs", CSRouter);
-//app.use("/", indexRouter);
-//app.use("/rank", rankRouter);
-//app.use("/mypage", MPRouter);
-//app.use("/like", likeRouter);
-//app.use("/report", reportRouter);
-//app.use("/commLike", commLikeRouter);
 
 // Handling Errors
 app.use((err, req, res, next) => {

@@ -1,9 +1,11 @@
 export async function getSavedEventRow(connection, uid){
   
     const getSavedEventsQuery = `
-      Select  visitedID, 
-      (select pic from EventTBL where EventTBL.eventID = UserVisitedTBL.eventID) as pic from UserVisitedTBL 
-      where userID = ?;
+    Select eventID, eventName, (select cName from CategoryTBL where CategoryTBL.cCode = EventTBL.kind) as kind, 
+    startDate, endDate,  pic, 
+    ( select count(*) from UserSavedTBL where UserSavedTBL.eventID = EventTBL.eventID) as savedNum,
+    (select count(*) from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID)as visitedNum 
+    from EventTBL where eventID in (SELECT eventID from UserSavedTBL where userID = ?); 
       `;
     const getRows = await connection.query(getSavedEventsQuery, uid);
   
