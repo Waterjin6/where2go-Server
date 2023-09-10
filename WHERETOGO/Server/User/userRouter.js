@@ -13,7 +13,7 @@ userRouter.patch('/changeP', jwtMiddleware, userController.patchUsersPw);
 
 userRouter.delete('/unregister', jwtMiddleware, userController.deleteUser);
 
-userRouter.get('/check-pw', jwtMiddleware, userController.getUserPW);
+userRouter.post('/check-pw', jwtMiddleware, userController.getUserPW);
 
 userRouter.get('/get-nickname', jwtMiddleware, userController.getUserNN);
 
