@@ -42,17 +42,3 @@ export async function getEventExist(eid) {
 
   return getResult[0].isExist;
 };
-
-export async function getEventUserInfo(eid, uid) {
-    const connection = await pool.getConnection(async (conn) => conn);
-    const getResultV = await eventDao.getEventUserVisitedInfoRow(connection, eid,uid);
-    const getResultS = await eventDao.getEventUserSavedInfoRow(connection, eid,uid);
-    connection.release();
-
-    var isVisited = false, isSaved = false;
-
-    if(getResultV[0].visitedNum >= 1)isVisited = true;
-    if(getResultS[0].savedNum >= 1)isSaved = true;
-
-    return {"isVisited" : isVisited, "isSaved" : isSaved};
-};

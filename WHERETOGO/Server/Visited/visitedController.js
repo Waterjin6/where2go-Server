@@ -11,7 +11,7 @@ export async function getVisited (req, res) {
 
     if (!userIdFromJWT) return res.send(errResponse(baseResponse.TOKEN_EMPTY));
 
-    const getVisitedResults = await savedProvider.getSavedList(userIdFromJWT);
+    const getVisitedResults = await visitedProvider.getVisitedList(userIdFromJWT);
 
     if(!getVisitedResults) return res.send(errResponse(baseResponse.VISITED_EVENTS_GET_ERROR));
 
@@ -43,7 +43,7 @@ export async function setVisited (req, res) {
     const eventID = req.params.eventID;
     const userIdFromJWT = req.verifiedToken.userIdx;
     const {star, companionID, review, isPrivate} = req.body;
-    var isSuccess = 1;
+    var isSuccess = 0;
 
     if (!userIdFromJWT) return res.send(errResponse(baseResponse.TOKEN_EMPTY));
     if(!eventID) return res.send(errResponse(baseResponse.EVENT_ID_EMPTY));
@@ -64,7 +64,7 @@ export async function setVisited (req, res) {
 
     var picList = [null, null, null, null, null, null, null, null, null, null];
 
-    for(let i = 0; req.files[i]; i++) picList[i] = `http://localhost:3000/visited/images/${req.files[i].filename}`;
+    for(let i = 0; req.files[i]; i++) picList[i] = `http://localhost:3000/images/visited/${req.files[i].filename}`;
     
     const insertVisitedResults = await visitedServicer.insertVisited(eventID, userIdFromJWT, star, companionID, picList, review, isPrivate);
 

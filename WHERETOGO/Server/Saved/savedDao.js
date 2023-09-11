@@ -34,10 +34,10 @@ export async function deleteSavedEvent(connection, uid, eid){
 
 export async function checkSavedEventRow(connection, uid, eid){
   
-  const deleteSavedEventsQuery = `
+  const checkSavedEventsQuery = `
       select count(*) as isSaved from UserSavedTBL where userID = ? and eventID = ?; 
     `;
-  const getRows = await connection.query(deleteSavedEventsQuery, [uid, eid]);
+  const getRows = await connection.query(checkSavedEventsQuery, [uid, eid]);
 
   return getRows[0];
 };

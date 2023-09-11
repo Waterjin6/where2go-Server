@@ -2,6 +2,9 @@ import * as eventProvider from "./eventProvider.js";
 import {getUserSexAge} from "../User/userProvider.js"
 import * as eventServicer from "./eventServicer.js";
 import * as baseResponse from "../config/baseResponseStatus.js";
+import {checkSavedList} from "../Saved/savedProvider.js";
+import {checkVisitedList} from "../Visited/visitedProvider.js";
+
 
 import {response, errResponse} from "../config/response.js";
 
@@ -74,9 +77,13 @@ export async function getEventUserInfo (req, res) {
 
     if (!eventID) return res.send(errResponse(baseResponse.EVENT_ID_EMPTY));
 
-    const getEventUserInfoResults = await eventProvider.getEventUserInfo(eventID, userIdFromJWT);
+    var isVisited = false, isSaved = false;
 
-    if(!getEventUserInfoResults) return res.send(errResponse(baseResponse.EVENT_USER_INFO_ERROR));
+    const checkSavedResults = await checkSavedList(userIdFromJWT, eventID);
+    const checkVisitedResults = await checkVisitedList(userIdFromJWT, eventID);
 
-    return res.send(response(baseResponse.SUCCESS, getEventUserInfoResults));
+    if(checkSavedResults == 1)isSaved = true;
+    if(checkVisitedResults == 1)isVisited = true;
+
+    return res.send(response(baseResponse.SUCCESS, {"isVisited" : isVisited, "isSaved" : isSaved}));
 }

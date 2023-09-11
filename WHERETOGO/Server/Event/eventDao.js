@@ -94,26 +94,6 @@ export async function getEventInfoRow(connection, eid) {
     return getRows[0];
 };
 
-export async function getEventUserVisitedInfoRow(connection, eid,uid) {
-  
-    const getEventUserInfoQuery = `
-        select count(*) as visitedNum from UserVisitedTBL where userID = ? and eventID = ?; 
-      `;
-    const getRows = await connection.query(getEventUserInfoQuery, [eid, uid]);
-    return getRows[0];
-};
-
-export async function getEventUserSavedInfoRow(connection, eid,uid) {
-  
-    const getEventUserInfoQuery = `
-        select count(*) as savedNum from UserSavedTBL where userID = ? and eventID = ?; 
-      `;
-    const getRows = await connection.query(getEventUserInfoQuery, [eid, uid]);
-  
-    return getRows[0];
-};
-
-
 export async function getEventExistRow(connection, eid) {
   
     const getEventExistQuery = `
