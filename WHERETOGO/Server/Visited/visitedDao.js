@@ -3,7 +3,7 @@ export async function getVisitedEventRow(connection, uid){
   const getVisitedEventsQuery = `
       Select eventID, eventName, (select cName from CategoryTBL where CategoryTBL.cCode = EventTBL.kind) as kind, 
       startDate, endDate,  
-      (select pic1 from UserVisitedTBL where userVisitedTBL.eventID = EventTBL.eventID and userVisitedTBL.userID = ?) as userPic,
+      (select pic1 from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID and userVisitedTBL.userID = ?) as userPic,
       (Select ifnull (userPic, EventTBL.pic)) as pic, 
       ( select count(*) from UserSavedTBL where UserSavedTBL.eventID = EventTBL.eventID) as savedNum,
       (select count(*) from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID)as visitedNum 
@@ -19,7 +19,7 @@ export async function getReviewsRow(connection, uid){
   const getVisitedEventsQuery = `
       Select eventID, eventName, (select cName from CategoryTBL where CategoryTBL.cCode = EventTBL.kind) as kind, 
       startDate, endDate,  
-      (select pic1 from UserVisitedTBL where userVisitedTBL.eventID = EventTBL.eventID and userVisitedTBL.userID = ?) as userPic,
+      (select pic1 from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID and userVisitedTBL.userID = ?) as userPic,
       (Select ifnull (userPic, EventTBL.pic)) as pic, 
       ( select count(*) from UserSavedTBL where UserSavedTBL.eventID = EventTBL.eventID) as savedNum,
       (select count(*) from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID)as visitedNum 
