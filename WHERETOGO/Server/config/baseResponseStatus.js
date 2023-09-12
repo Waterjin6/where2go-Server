@@ -116,4 +116,6 @@ export const STAR_EMPTY = { "isSuccess": false, "code": 5031, "message": "별점
 export const COMPANION_ID_EMPTY = { "isSuccess": false, "code": 5032, "message": "동행자 ID가 비었습니다." };
 export const REVIEW_EMPTY = { "isSuccess": false, "code": 5033, "message": "리뷰가 비었습니다." };
 export const IS_PRIVATE_EMPTY = { "isSuccess": false, "code": 5034, "message": "공개여부가 비었습니다." };
+export const REVIEWS_GET_ERROR = { "isSuccess": false, "code": 5035, "message": "리뷰를 불러올 수 없습니다." };
+export const REVIEW_ID_EMPTY = { "isSuccess": false, "code": 5036, "message": "리뷰아이디가 비었습니다" };
 

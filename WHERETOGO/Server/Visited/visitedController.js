@@ -39,6 +39,26 @@ export async function checkVisited (req, res) {
     return res.send(response(baseResponse.SUCCESS, {"isVisited" : false}));
 }
 
+export async function setVisitedSimple (req, res) {    
+    const eventID = req.params.eventID;
+    const userIdFromJWT = req.verifiedToken.userIdx;
+
+    if (!userIdFromJWT) return res.send(errResponse(baseResponse.TOKEN_EMPTY));
+    if(!eventID) return res.send(errResponse(baseResponse.EVENT_ID_EMPTY));
+    const isEventExist = await getEventExist(eventID);
+
+    if(isEventExist == 0) return res.send(errResponse(baseResponse.EVENT_NOT_EXIST));
+
+    const checkVisitedResults = await visitedProvider.checkVisitedList(userIdFromJWT, eventID);
+
+    if(checkVisitedResults == 1) return res.send(errResponse(baseResponse.EVENT_ALREADY_VISITED));
+
+    
+    const insertVisitedResults = await visitedServicer.insertVisitedSimple(eventID, userIdFromJWT);
+
+    return res.send(response(baseResponse.SUCCESS));
+}
+
 export async function setVisited (req, res) {    
     const eventID = req.params.eventID;
     const userIdFromJWT = req.verifiedToken.userIdx;
@@ -90,4 +110,19 @@ export async function deleteVisited (req, res) {
     const deleteVisitedResults = await visitedServicer.deleteVisited(eventID, userIdFromJWT);
 
     return res.send(response(baseResponse.SUCCESS));
+}
+
+export async function getReview (req, res) {
+
+    const reviewID = req.query.reviewID;
+    const userIdFromJWT = req.verifiedToken.userIdx;
+
+    if (!reviewID) return res.send(errResponse(baseResponse.REVIEW_ID_EMPTY));
+    if (!userIdFromJWT) return res.send(errResponse(baseResponse.TOKEN_EMPTY));
+
+    const getReviewsResults = await visitedProvider.getReviewsList(userIdFromJWT);
+
+    if(!getReviewsResults) return res.send(errResponse(baseResponse.REVIEWS_GET_ERROR));
+
+    return res.send(response(baseResponse.SUCCESS, getReviewsResults));
 }

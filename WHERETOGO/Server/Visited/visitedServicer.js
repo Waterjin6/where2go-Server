@@ -27,6 +27,21 @@ export async function insertVisited(eid, uid, star, companionID, picList, review
 };
 
 
+export async function insertVisitedSimple(eid, uid) {
+    try {
+        const connection = await pool.getConnection(async (conn) => conn);
+        const putVisitedEvent = await visitedDao.insertVisitedEventSimple(connection, uid, eid);
+        connection.release();
+
+        return response(baseResponse.SUCCESS);
+
+    } catch (err) {
+        logger.error(`App - insertVisitedSimple Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+};
+
+
 export async function deleteVisited(eid, uid) {
     try {
         const connection = await pool.getConnection(async (conn) => conn);

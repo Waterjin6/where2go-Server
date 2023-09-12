@@ -12,6 +12,14 @@ export async function getVisitedList(uid) {
 };
 
 
+export async function getReviewsList(uid) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const getResult = await visitedDao.getReviewsRow(connection, uid);
+    connection.release();
+  
+    return getResult;
+};
+
 export async function checkVisitedList(uid, eid) {
     const connection = await pool.getConnection(async (conn) => conn);
     const getResult = await visitedDao.checkVisitedEventRow(connection, uid, eid);
