@@ -8,13 +8,13 @@ import * as visitedController from "./visitedController.js";
 const visitedRouter = express.Router();
   
 
-visitedRouter.get('/get', jwtMiddleware, visitedController.getVisited);
+visitedRouter.get('/', jwtMiddleware, visitedController.getVisited);
 
 
-visitedRouter.post('/put/:eventID', jwtMiddleware, visitedController.setVisitedSimple);
+visitedRouter.post('/:eventID', jwtMiddleware, visitedController.setVisitedSimple);
 //visitedRouter.post('/put/:eventID', jwtMiddleware, upload.array("pic",10), visitedController.setVisited);
   
-visitedRouter.delete('/delete/:eventID', jwtMiddleware, visitedController.deleteVisited);
+visitedRouter.delete('/:eventID', jwtMiddleware, visitedController.deleteVisited);
 
 visitedRouter.get('/check/:eventID', jwtMiddleware, visitedController.checkVisited);
 

@@ -12,7 +12,7 @@ eventRouter.get('/top', eventController.getTopEvents);
 
 eventRouter.get('/recommand/:sex/:age', eventController.getRecommandEvents);
 
-eventRouter.get('/userTop', jwtMiddleware, eventController.getUserTopEvents);
+eventRouter.get('/user-top', jwtMiddleware, eventController.getUserTopEvents);
   
 eventRouter.get('/:eventID', eventController.getEventById);
 

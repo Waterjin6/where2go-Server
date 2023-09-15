@@ -8,11 +8,11 @@ import * as savedController from "./savedController.js";
 const savedRouter = express.Router();
   
 
-savedRouter.get('/get', jwtMiddleware, savedController.getSaved);
+savedRouter.get('/', jwtMiddleware, savedController.getSaved);
 
-savedRouter.post('/put/:eventID', jwtMiddleware,savedController.setSaved);
+savedRouter.post('/:eventID', jwtMiddleware,savedController.setSaved);
   
-savedRouter.delete('/delete/:eventID', jwtMiddleware, savedController.deleteSaved);
+savedRouter.delete('/:eventID', jwtMiddleware, savedController.deleteSaved);
 
 savedRouter.get('/check/:eventID', jwtMiddleware, savedController.checkSaved);
 
