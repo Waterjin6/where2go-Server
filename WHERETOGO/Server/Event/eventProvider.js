@@ -32,7 +32,7 @@ export async function getEventInfo(eid) {
     const getResult = await eventDao.getEventInfoRow(connection, eid);
     connection.release();
   
-    return getResult;
+    return getResult[0];
 };
 
 export async function getEventExist(eid) {
