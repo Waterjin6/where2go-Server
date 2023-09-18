@@ -129,20 +129,25 @@ export async function deleteVisited (req, res) {
 
 export async function getReview (req, res) {
 
-    const eventID = req.params.eventID;
-    const userIdFromJWT = req.verifiedToken.userIdx;
+    const visitedID = req.params.reviewID;
+    if (!visitedID) return res.send(errResponse(baseResponse.REVIEW_ID_EMPTY));
 
-    if (!eventID) return res.send(errResponse(baseResponse.EVENT_ID_EMPTY));
-    if (!userIdFromJWT) return res.send(errResponse(baseResponse.TOKEN_EMPTY));
-
-    const checkVisitedResults = await visitedProvider.checkVisitedList(userIdFromJWT, eventID);
-    if(checkVisitedResults == 0) return res.send(errResponse(baseResponse.EVENT_NOT_VISITED));
-
-    const checkIfReviewIsPrivate = await visitedProvider.checkIsPrivate(userIdFromJWT, eventID);
-    if(checkVisitedResults == 0) return res.send(errResponse(baseResponse.EVENT_NOT_VISITED));
-
-    const getAReviewResults = await visitedProvider.getAReview(userIdFromJWT, eventID);
+    const getAReviewResults = await visitedProvider.getAReview(visitedID);
     if(!getAReviewResults) return res.send(errResponse(baseResponse.REVIEWS_GET_ERROR));
 
     return res.send(response(baseResponse.SUCCESS, getAReviewResults));
 }
+
+
+export async function getReviewList (req, res) {
+
+    const eventID = req.params.eventID;
+
+    if (!eventID) return res.send(errResponse(baseResponse.EVENT_ID_EMPTY));
+
+    const getReviewListResults = await visitedProvider.getReviewList(eventID);
+    if(!getReviewListResults) return res.send(errResponse(baseResponse.REVIEWS_GET_ERROR));
+
+    return res.send(response(baseResponse.SUCCESS, getReviewListResults));
+}
+

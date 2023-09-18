@@ -34,12 +34,12 @@ export async function getVEventRow(connection, uid){
   return getRows[0];
 };
 
-export async function getAReviewRow(connection, uid, eid){
+export async function getAReviewRow(connection, vid){
   
   const getAReviewQuery = `
-      Select * from UserVisitedTBL where userID = ? and eventID = ?;
+      Select * from UserVisitedTBL where visitedID = ?;
     `;
-  const getRows = await connection.query(getAReviewQuery, [uid,eid]);
+  const getRows = await connection.query(getAReviewQuery, vid);
 
   return getRows[0];
 };
@@ -97,4 +97,36 @@ const checkVisitedEventsQuery = `
 const getRows = await connection.query(checkVisitedEventsQuery, [uid, eid]);
 
 return getRows[0];
+};
+
+export async function checkIfPrivate(connection, vid){
+
+  const checkIfIsPrivateQuery = `
+      select isPrivate from UserVisitedTBL where visitedID = ?; 
+    `;
+  const getRows = await connection.query(checkIfIsPrivateQuery, vid);
+  
+  return getRows[0];
+};
+
+
+export async function getWriterID(connection, vid){
+
+  const getWriterIDQuery = `
+      select userID from UserVisitedTBL where visitedID = ?; 
+    `;
+  const getRows = await connection.query(getWriterIDQuery, vid);
+  
+  return getRows[0];
+};
+
+
+export async function getReviewList(connection, eid){
+  
+  const getReviewListQuery = `
+      Select * from UserVisitedTBL where eventID = ? and isPrivate = 0 and star != -1;
+    `;
+  const getRows = await connection.query(getReviewListQuery, eid);
+
+  return getRows[0];
 };

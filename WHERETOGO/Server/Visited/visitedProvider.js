@@ -12,9 +12,9 @@ export async function getVisitedList(uid) {
 };
 
 
-export async function getAReview(uid, eid) {
+export async function getAReview(vid) {
     const connection = await pool.getConnection(async (conn) => conn);
-    const getResult = await visitedDao.getAReviewRow(connection, uid, eid);
+    const getResult = await visitedDao.getAReviewRow(connection, vid);
     connection.release();
   
     return getResult;
@@ -26,4 +26,29 @@ export async function checkVisitedList(uid, eid) {
     connection.release();
   
     return getResult[0].isVisited;
+};
+
+export async function checkIsPrivate(vid) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const getResult = await visitedDao.checkIfPrivate(connection, vid);
+    connection.release();
+  
+    return getResult[0].isPrivate;
+};
+
+
+export async function getWriterID(vid) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const getResult = await visitedDao.getWriterID(connection, vid);
+    connection.release();
+  
+    return getResult[0].userID;
+};
+
+export async function getReviewList(eid) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const getResult = await visitedDao.getReviewList(connection, eid);
+    connection.release();
+  
+    return getResult;
 };

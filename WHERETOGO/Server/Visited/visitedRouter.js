@@ -18,11 +18,13 @@ visitedRouter.delete('/:eventID', jwtMiddleware, visitedController.deleteVisited
 visitedRouter.get('/check/:eventID', jwtMiddleware, visitedController.checkVisited);
 
 // review
-visitedRouter.get('/review/:eventID',jwtMiddleware, visitedController.getReview);
+visitedRouter.get('/review/:reviewID', visitedController.getReview);
 
 visitedRouter.patch('/review/sv/:eventID', jwtMiddleware, upload.array("pic",10), visitedController.setReview);
 
 visitedRouter.patch('/review/rm/:eventID',  jwtMiddleware, visitedController.deleteReview);
+
+visitedRouter.get('/review/list/:eventID', visitedController.getReviewList);
 
 
 
