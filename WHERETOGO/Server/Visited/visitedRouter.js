@@ -11,13 +11,19 @@ const visitedRouter = express.Router();
 visitedRouter.get('/', jwtMiddleware, visitedController.getVisited);
 
 
-visitedRouter.post('/:eventID', jwtMiddleware, visitedController.setVisitedSimple);
-//visitedRouter.post('/put/:eventID', jwtMiddleware, upload.array("pic",10), visitedController.setVisited);
+visitedRouter.post('/:eventID', jwtMiddleware, visitedController.setVisited);
   
 visitedRouter.delete('/:eventID', jwtMiddleware, visitedController.deleteVisited);
 
 visitedRouter.get('/check/:eventID', jwtMiddleware, visitedController.checkVisited);
 
-visitedRouter.get('/review/:reviewID',jwtMiddleware, visitedController.getReview);
+// review
+visitedRouter.get('/review/:eventID',jwtMiddleware, visitedController.getReview);
+
+visitedRouter.patch('/review/sv/:eventID', jwtMiddleware, upload.array("pic",10), visitedController.setReview);
+
+visitedRouter.patch('/review/rm/:eventID',  jwtMiddleware, visitedController.deleteReview);
+
+
 
 export default visitedRouter;

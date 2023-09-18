@@ -95,6 +95,8 @@ export async function getSearchRow(connection, search, kind, fromD, toD, aCode, 
         qr+= ' savedNum DESC;';
     }
 
+    console.log(qr);
+
     const getRows = await connection.query(qr);
   
     return getRows[0];
@@ -103,7 +105,7 @@ export async function getSearchRow(connection, search, kind, fromD, toD, aCode, 
 export async function insertSearch(connection, search){
   
     const insertSearchWordQuery = `
-       insert into searchTBL (word) values (?);
+       insert into SearchTBL (word) values (?);
       `;
     const getRows = await connection.query(insertSearchWordQuery, search);
   
@@ -113,7 +115,7 @@ export async function insertSearch(connection, search){
 export async function getHotWordsRow(connection){
   
     const getHotWordsQuery = `
-        Select word, count(word) as count from searchTBL Group By word ORDER BY count(*) DESC LIMIT 10;
+        Select word, count(word) as count from SearchTBL Group By word ORDER BY count(*) DESC LIMIT 10;
       `;
     const getRows = await connection.query(getHotWordsQuery);
   

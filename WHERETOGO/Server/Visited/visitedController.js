@@ -39,7 +39,7 @@ export async function checkVisited (req, res) {
     return res.send(response(baseResponse.SUCCESS, {"isVisited" : false}));
 }
 
-export async function setVisitedSimple (req, res) {    
+export async function setVisited (req, res) {    
     const eventID = req.params.eventID;
     const userIdFromJWT = req.verifiedToken.userIdx;
 
@@ -54,12 +54,12 @@ export async function setVisitedSimple (req, res) {
     if(checkVisitedResults == 1) return res.send(errResponse(baseResponse.EVENT_ALREADY_VISITED));
 
     
-    const insertVisitedResults = await visitedServicer.insertVisitedSimple(eventID, userIdFromJWT);
+    const insertVisitedResults = await visitedServicer.insertVisited(eventID, userIdFromJWT);
 
     return res.send(response(baseResponse.SUCCESS));
 }
 
-export async function setVisited (req, res) {    
+export async function setReview (req, res) {    
     const eventID = req.params.eventID;
     const userIdFromJWT = req.verifiedToken.userIdx;
     const {star, companionID, review, isPrivate} = req.body;
@@ -74,19 +74,34 @@ export async function setVisited (req, res) {
     if(!isPrivate) return res.send(errResponse(baseResponse.IS_PRIVATE_EMPTY));
 
     const isEventExist = await getEventExist(eventID);
-
     if(isEventExist == 0) return res.send(errResponse(baseResponse.EVENT_NOT_EXIST));
 
     const checkVisitedResults = await visitedProvider.checkVisitedList(userIdFromJWT, eventID);
-
-    if(checkVisitedResults == 1) return res.send(errResponse(baseResponse.EVENT_ALREADY_VISITED));
-
+    if(checkVisitedResults == 0) return res.send(errResponse(baseResponse.EVENT_NOT_VISITED));
 
     var picList = [null, null, null, null, null, null, null, null, null, null];
 
     for(let i = 0; req.files[i]; i++) picList[i] = `http://localhost:3000/images/visited/${req.files[i].filename}`;
     
-    const insertVisitedResults = await visitedServicer.insertVisited(eventID, userIdFromJWT, star, companionID, picList, review, isPrivate);
+    const insertReviewResults = await visitedServicer.insertReview(eventID, userIdFromJWT, star, companionID, picList, review, isPrivate);
+
+    return res.send(response(baseResponse.SUCCESS));
+}
+
+export async function deleteReview (req, res) {    
+    const eventID = req.params.eventID;
+    const userIdFromJWT = req.verifiedToken.userIdx;
+
+    if (!userIdFromJWT) return res.send(errResponse(baseResponse.TOKEN_EMPTY));
+    if(!eventID) return res.send(errResponse(baseResponse.EVENT_ID_EMPTY));
+
+    const isEventExist = await getEventExist(eventID);
+    if(isEventExist == 0) return res.send(errResponse(baseResponse.EVENT_NOT_EXIST));
+
+    const checkVisitedResults = await visitedProvider.checkVisitedList(userIdFromJWT, eventID);
+    if(checkVisitedResults == 0) return res.send(errResponse(baseResponse.EVENT_NOT_VISITED));
+    
+    const deleteReviewResults = await visitedServicer.deleteReview(eventID, userIdFromJWT);
 
     return res.send(response(baseResponse.SUCCESS));
 }
@@ -114,15 +129,20 @@ export async function deleteVisited (req, res) {
 
 export async function getReview (req, res) {
 
-    const reviewID = req.query.reviewID;
+    const eventID = req.params.eventID;
     const userIdFromJWT = req.verifiedToken.userIdx;
 
-    if (!reviewID) return res.send(errResponse(baseResponse.REVIEW_ID_EMPTY));
+    if (!eventID) return res.send(errResponse(baseResponse.EVENT_ID_EMPTY));
     if (!userIdFromJWT) return res.send(errResponse(baseResponse.TOKEN_EMPTY));
 
-    const getReviewsResults = await visitedProvider.getReviewsList(userIdFromJWT);
+    const checkVisitedResults = await visitedProvider.checkVisitedList(userIdFromJWT, eventID);
+    if(checkVisitedResults == 0) return res.send(errResponse(baseResponse.EVENT_NOT_VISITED));
 
-    if(!getReviewsResults) return res.send(errResponse(baseResponse.REVIEWS_GET_ERROR));
+    const checkIfReviewIsPrivate = await visitedProvider.checkIsPrivate(userIdFromJWT, eventID);
+    if(checkVisitedResults == 0) return res.send(errResponse(baseResponse.EVENT_NOT_VISITED));
 
-    return res.send(response(baseResponse.SUCCESS, getReviewsResults));
+    const getAReviewResults = await visitedProvider.getAReview(userIdFromJWT, eventID);
+    if(!getAReviewResults) return res.send(errResponse(baseResponse.REVIEWS_GET_ERROR));
+
+    return res.send(response(baseResponse.SUCCESS, getAReviewResults));
 }

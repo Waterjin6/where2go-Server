@@ -12,9 +12,9 @@ export async function getVisitedList(uid) {
 };
 
 
-export async function getReviewsList(uid) {
+export async function getAReview(uid, eid) {
     const connection = await pool.getConnection(async (conn) => conn);
-    const getResult = await visitedDao.getReviewsRow(connection, uid);
+    const getResult = await visitedDao.getAReviewRow(connection, uid, eid);
     connection.release();
   
     return getResult;

@@ -12,25 +12,38 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import connect from "http2";
 
-export async function insertVisited(eid, uid, star, companionID, picList, review, isPrivate) {
+export async function insertReview(eid, uid, star, companionID, picList, review, isPrivate) {
     try {
         const connection = await pool.getConnection(async (conn) => conn);
-        const putVisitedEvent = await visitedDao.insertVisitedEvent(connection, uid, eid, star, companionID, picList, review, isPrivate);
+        const putReview = await visitedDao.insertReview(connection, uid, eid, star, companionID, picList, review, isPrivate);
         connection.release();
 
         return response(baseResponse.SUCCESS);
 
     } catch (err) {
-        logger.error(`App - insertVisited Service error\n: ${err.message}`);
+        logger.error(`App - insertReview Service error\n: ${err.message}`);
         return errResponse(baseResponse.DB_ERROR);
     }
 };
 
-
-export async function insertVisitedSimple(eid, uid) {
+export async function deleteReview(eid, uid) {
     try {
         const connection = await pool.getConnection(async (conn) => conn);
-        const putVisitedEvent = await visitedDao.insertVisitedEventSimple(connection, uid, eid);
+        const deleteReview = await visitedDao.deleteReview(connection, uid, eid);
+        connection.release();
+
+        return response(baseResponse.SUCCESS);
+
+    } catch (err) {
+        logger.error(`App - deleteReview Service error\n: ${err.message}`);
+        return errResponse(baseResponse.DB_ERROR);
+    }
+};
+
+export async function insertVisited(eid, uid) {
+    try {
+        const connection = await pool.getConnection(async (conn) => conn);
+        const putVisitedEvent = await visitedDao.insertVisitedEvent(connection, uid, eid);
         connection.release();
 
         return response(baseResponse.SUCCESS);
