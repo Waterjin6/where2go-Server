@@ -119,3 +119,4 @@ export const IS_PRIVATE_EMPTY = { "isSuccess": false, "code": 5034, "message": "
 export const REVIEWS_GET_ERROR = { "isSuccess": false, "code": 5035, "message": "리뷰를 불러올 수 없습니다." };
 export const REVIEW_ID_EMPTY = { "isSuccess": false, "code": 5036, "message": "리뷰아이디가 비었습니다" };
 export const REVIEW_IS_PRIVATE = { "isSuccess": false, "code": 5037, "message": "비공개 리뷰입니다." };
+export const COMPANION_LIST_ERROR = { "isSuccess": false, "code": 5038, "message": "동행자 리스트를 불러올 수 없습니다." };
