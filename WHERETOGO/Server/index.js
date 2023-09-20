@@ -19,6 +19,7 @@ import calendarRouter from "./Calendar/calendarRouter.js";
 import kindRouter from "./Kind/kindRouter.js";
 import areaRouter from "./Area/areaRouter.js";
 import companionRouter from "./Companion/companionRouter.js";
+import reviewRouter from "./Review/reviewRouter.js";
 
 import dotenv from "dotenv";
 
@@ -46,6 +47,7 @@ app.use("/calendar", calendarRouter);
 app.use("/kind", kindRouter);
 app.use("/area", areaRouter);
 app.use("/companion", companionRouter);
+app.use("/review", reviewRouter);
 app.use('/images',express.static(dir));
 
 

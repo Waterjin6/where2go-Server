@@ -121,3 +121,5 @@ export const REVIEW_ID_EMPTY = { "isSuccess": false, "code": 5036, "message": "�
 export const REVIEW_IS_PRIVATE = { "isSuccess": false, "code": 5037, "message": "비공개 리뷰입니다." };
 export const COMPANION_LIST_ERROR = { "isSuccess": false, "code": 5038, "message": "동행자 리스트를 불러올 수 없습니다." };
 export const COMPANION_POP_LIST_ERROR = { "isSuccess": false, "code": 5039, "message": "동행자 인기순 리스트를 불러올 수 없습니다." };
+export const CHECK_REVIEW_LIKED_ERROR = { "isSuccess": false, "code": 5040, "message": "리뷰 좋아요 여부를 불러올 수 없습니다." };
+export const REVIEW_ALREADY_LIKED = { "isSuccess": false, "code": 5041, "message": "이미 좋아요한 리뷰입니다." };
