@@ -18,4 +18,6 @@ eventRouter.get('/:eventID', eventController.getEventById);
 
 eventRouter.get('/userInfo/:eventID', jwtMiddleware, eventController.getEventUserInfo);
 
+eventRouter.get('/com-pop/:companionID', eventController.getComPopEvents);
+
 export default eventRouter;

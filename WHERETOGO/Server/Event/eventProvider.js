@@ -42,3 +42,12 @@ export async function getEventExist(eid) {
 
   return getResult[0].isExist;
 };
+
+
+export async function getComPopList(cID) {
+  const connection = await pool.getConnection(async (conn) => conn);
+  const getResult = await eventDao.getComPopListRow(connection, cID);
+  connection.release();
+
+  return getResult;
+};

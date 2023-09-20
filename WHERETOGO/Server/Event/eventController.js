@@ -87,3 +87,15 @@ export async function getEventUserInfo (req, res) {
 
     return res.send(response(baseResponse.SUCCESS, {"isVisited" : isVisited, "isSaved" : isSaved}));
 }
+
+export async function getComPopEvents (req, res) { 
+    const cID = req.params.companionID;
+
+    if (!cID) return res.send(errResponse(baseResponse.COMPANION_ID_EMPTY));
+
+    const getComPopResults = await eventProvider.getComPopList(cID);
+
+    if(!getComPopResults) return res.send(errResponse(baseResponse.COMPANION_POP_LIST_ERROR));
+
+    return res.send(response(baseResponse.SUCCESS, getComPopResults));
+}

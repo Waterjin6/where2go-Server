@@ -24,6 +24,23 @@ export async function getTopListRow(connection) {
     return getRows[0];
 };
 
+export async function getComPopListRow(connection, cID) {
+  
+    const getComPopListRowQuery = `
+        Select  eventID, eventName, 
+        (select cName from CategoryTBL where CategoryTBL.cCode = EventTBL.kind) as kind, 
+        startDate, endDate,  pic, 
+        (select count(*) from UserSavedTBL where UserSavedTBL.eventID = EventTBL.eventID) as totalSavedNum,
+        (select count(*) from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID)as visitedNum,
+        (select count(*) from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID and UserVisitedTBL.companionID = ?) as companionVisitedNum
+        from EventTBL ORDER BY companionVisitedNum DESC;
+      `;
+    const getRows = await connection.query(getComPopListRowQuery, cID);
+  
+    return getRows[0];
+};
+
+
 export async function getRecommandEventsRow(connection, sex, age) {
   
     var getRecommandEventsQuery = `
