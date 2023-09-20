@@ -95,8 +95,6 @@ export async function getSearchRow(connection, search, kind, fromD, toD, aCode, 
         qr+= ' savedNum DESC;';
     }
 
-    console.log(qr);
-
     const getRows = await connection.query(qr);
   
     return getRows[0];
