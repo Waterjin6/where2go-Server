@@ -19,9 +19,9 @@ export async function getTopList() {
     return getResult;
   };
 
-export async function getRecommandEventsList(sex,age) {
+export async function getRecommandEventsList(sex, age, fromD, toD, aCode, aDCode) {
     const connection = await pool.getConnection(async (conn) => conn);
-    const getResult = await eventDao.getRecommandEventsRow(connection, sex, age);
+    const getResult = await eventDao.getRecommandEventsRow(connection, sex, age, fromD, toD, aCode, aDCode);
     connection.release();
   
     return getResult;
@@ -44,9 +44,9 @@ export async function getEventExist(eid) {
 };
 
 
-export async function getComPopList(cID) {
+export async function getComPopList(cID, fromD, toD, aCode, aDCode) {
   const connection = await pool.getConnection(async (conn) => conn);
-  const getResult = await eventDao.getComPopListRow(connection, cID);
+  const getResult = await eventDao.getComPopListRow(connection, cID, fromD, toD, aCode, aDCode);
   connection.release();
 
   return getResult;

@@ -122,9 +122,9 @@ export async function postSignIn (email, password) {
             }, // 토큰의 내용(payload)
             secret_config.jwtsecret, // 비밀키
             {
-                expiresIn: "1d",
+                expiresIn: "30d",
                 subject: "userInfo",
-            } // 유효 기간 1일
+            } // 유효 기간 30일
         );
 
         return response(baseResponse.SUCCESS, {'userId': userInfoRows[0].userIdx, 'jwt': token});
