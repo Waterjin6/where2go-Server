@@ -127,6 +127,25 @@ export async function deleteVisited (req, res) {
     return res.send(response(baseResponse.SUCCESS));
 }
 
+export async function getMReview (req, res) {
+
+    const visitedID = req.params.reviewID;
+    const userIdFromJWT = req.verifiedToken.userIdx;
+
+    if (!userIdFromJWT) return res.send(errResponse(baseResponse.TOKEN_EMPTY));
+    if (!visitedID) return res.send(errResponse(baseResponse.REVIEW_ID_EMPTY));
+
+    const isPrivate = await visitedProvider.checkIsPrivate(visitedID);
+    const writerID = await visitedProvider.getWriterID(visitedID);
+    
+    if((isPrivate == 1)&&(writerID != userIdFromJWT)) return res.send(errResponse(baseResponse.REVIEW_IS_PRIVATE));
+
+    const getAReviewResults = await visitedProvider.getMAReview(visitedID, userIdFromJWT);
+    if(!getAReviewResults) return res.send(errResponse(baseResponse.REVIEWS_GET_ERROR));
+
+    return res.send(response(baseResponse.SUCCESS, getAReviewResults));
+}
+
 export async function getReview (req, res) {
 
     const visitedID = req.params.reviewID;
@@ -151,3 +170,42 @@ export async function getReviewList (req, res) {
     return res.send(response(baseResponse.SUCCESS, getReviewListResults));
 }
 
+
+export async function getMReviewList (req, res) {
+
+    const userIdFromJWT = req.verifiedToken.userIdx;
+    const eventID = req.params.eventID;
+
+    if (!userIdFromJWT) return res.send(errResponse(baseResponse.TOKEN_EMPTY));
+    if (!eventID) return res.send(errResponse(baseResponse.EVENT_ID_EMPTY));
+
+    const getMReviewListResults = await visitedProvider.getMReviewList(eventID, userIdFromJWT);
+    if(!getMReviewListResults) return res.send(errResponse(baseResponse.REVIEWS_GET_ERROR));
+
+    return res.send(response(baseResponse.SUCCESS, getMReviewListResults));
+}
+
+
+export async function getCompanionRate (req, res) {
+
+    const eventID = req.params.eventID;
+    if (!eventID) return res.send(errResponse(baseResponse.EVENT_ID_EMPTY));
+
+    const getCompanionRateResults = await visitedProvider.getCompanionRate(eventID);
+    if(!getCompanionRateResults) return res.send(errResponse(baseResponse.COMPANION_VISIT_RATE_GET_ERROR));
+
+    return res.send(response(baseResponse.SUCCESS, getCompanionRateResults));
+}
+
+
+export async function getCompanionStar (req, res) {
+
+    const eventID = req.params.eventID;
+    if (!eventID) return res.send(errResponse(baseResponse.EVENT_ID_EMPTY));
+    const comID = req.params.companionID;
+
+    const getCompanionStarResults = await visitedProvider.getCompanionStar(eventID, comID);
+    if(!getCompanionStarResults) return res.send(errResponse(baseResponse.COMPANION_VISIT_STAR_GET_ERROR));
+
+    return res.send(response(baseResponse.SUCCESS, getCompanionStarResults[0].totalStar));
+}

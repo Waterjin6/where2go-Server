@@ -19,13 +19,18 @@ visitedRouter.get('/check/:eventID', jwtMiddleware, visitedController.checkVisit
 
 // review
 visitedRouter.get('/review/:reviewID', visitedController.getReview);
+visitedRouter.get('/review/m/:reviewID', jwtMiddleware, visitedController.getMReview);
 
 visitedRouter.patch('/review/sv/:eventID', jwtMiddleware, upload.array("pic",10), visitedController.setReview);
 
 visitedRouter.patch('/review/rm/:eventID',  jwtMiddleware, visitedController.deleteReview);
 
 visitedRouter.get('/review/list/:eventID', visitedController.getReviewList);
+visitedRouter.get('/review/m/list/:eventID',jwtMiddleware,  visitedController.getMReviewList);
 
+
+visitedRouter.get('/event/companion-rate/:eventID', visitedController.getCompanionRate);
+visitedRouter.get('/event/star/:eventID/:companionID', visitedController.getCompanionStar);
 
 
 export default visitedRouter;

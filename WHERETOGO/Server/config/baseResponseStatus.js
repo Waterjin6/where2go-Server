@@ -123,3 +123,6 @@ export const COMPANION_LIST_ERROR = { "isSuccess": false, "code": 5038, "message
 export const COMPANION_POP_LIST_ERROR = { "isSuccess": false, "code": 5039, "message": "동행자 인기순 리스트를 불러올 수 없습니다." };
 export const CHECK_REVIEW_LIKED_ERROR = { "isSuccess": false, "code": 5040, "message": "리뷰 좋아요 여부를 불러올 수 없습니다." };
 export const REVIEW_ALREADY_LIKED = { "isSuccess": false, "code": 5041, "message": "이미 좋아요한 리뷰입니다." };
+export const EVENT_RATE_INFO_GET_ERROR = { "isSuccess": false, "code": 5042, "message": "이벤트 평가 정보를 불러올 수 없습니다." };
+export const COMPANION_VISIT_RATE_GET_ERROR = { "isSuccess": false, "code": 5043, "message": "동행자 방문율을 불러올 수 없습니다." };
+export const COMPANION_VISIT_STAR_GET_ERROR = { "isSuccess": false, "code": 5044, "message": "동행자 별점을 불러올 수 없습니다." };
