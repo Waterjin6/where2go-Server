@@ -161,10 +161,11 @@ export async function getReview (req, res) {
 export async function getReviewList (req, res) {
 
     const eventID = req.params.eventID;
+    const align = req.params.align;
 
     if (!eventID) return res.send(errResponse(baseResponse.EVENT_ID_EMPTY));
 
-    const getReviewListResults = await visitedProvider.getReviewList(eventID);
+    const getReviewListResults = await visitedProvider.getReviewList(eventID, align);
     if(!getReviewListResults) return res.send(errResponse(baseResponse.REVIEWS_GET_ERROR));
 
     return res.send(response(baseResponse.SUCCESS, getReviewListResults));
@@ -175,11 +176,12 @@ export async function getMReviewList (req, res) {
 
     const userIdFromJWT = req.verifiedToken.userIdx;
     const eventID = req.params.eventID;
+    const align = req.params.align;
 
     if (!userIdFromJWT) return res.send(errResponse(baseResponse.TOKEN_EMPTY));
     if (!eventID) return res.send(errResponse(baseResponse.EVENT_ID_EMPTY));
 
-    const getMReviewListResults = await visitedProvider.getMReviewList(eventID, userIdFromJWT);
+    const getMReviewListResults = await visitedProvider.getMReviewList(eventID, userIdFromJWT, align);
     if(!getMReviewListResults) return res.send(errResponse(baseResponse.REVIEWS_GET_ERROR));
 
     return res.send(response(baseResponse.SUCCESS, getMReviewListResults));

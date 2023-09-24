@@ -53,9 +53,9 @@ export async function getWriterID(vid) {
     return getResult[0].userID;
 };
 
-export async function getReviewList(eid) {
+export async function getReviewList(eid, align) {
     const connection = await pool.getConnection(async (conn) => conn);
-    const getResult = await visitedDao.getReviewList(connection, eid);
+    const getResult = await visitedDao.getReviewList(connection, eid, align);
     connection.release();
   
     return getResult;
@@ -80,9 +80,9 @@ export async function getCompanionStar(eid, cid) {
 };
 
 
-export async function getMReviewList(eid, uid) {
+export async function getMReviewList(eid, uid, align) {
     const connection = await pool.getConnection(async (conn) => conn);
-    const getResult = await visitedDao.getMReviewList(connection, eid, uid);
+    const getResult = await visitedDao.getMReviewList(connection, eid, uid, align);
     connection.release();
   
     return getResult;

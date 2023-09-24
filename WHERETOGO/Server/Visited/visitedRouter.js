@@ -25,8 +25,8 @@ visitedRouter.patch('/review/sv/:eventID', jwtMiddleware, upload.array("pic",10)
 
 visitedRouter.patch('/review/rm/:eventID',  jwtMiddleware, visitedController.deleteReview);
 
-visitedRouter.get('/review/list/:eventID', visitedController.getReviewList);
-visitedRouter.get('/review/m/list/:eventID',jwtMiddleware,  visitedController.getMReviewList);
+visitedRouter.get('/review/list/:eventID/:align', visitedController.getReviewList);
+visitedRouter.get('/review/m/list/:eventID/:align',jwtMiddleware,  visitedController.getMReviewList);
 
 
 visitedRouter.get('/event/companion-rate/:eventID', visitedController.getCompanionRate);

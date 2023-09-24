@@ -135,24 +135,43 @@ export async function getWriterID(connection, vid){
 };
 
 
-export async function getReviewList(connection, eid){
-  const getReviewListQuery = `
+export async function getReviewList(connection, eid, align){
+  var getReviewListQuery = `
       Select * , (select count(*) from ReviewLikeTBL where ReviewLikeTBL.visitedID = UserVisitedTBL.visitedID) as likeNum, 
       (select 0) as isUserLiked 
-      from UserVisitedTBL where eventID = ? and isPrivate = 0 and star != -1;
+      from UserVisitedTBL where eventID = ? and isPrivate = 0 and star != -1 ORDER BY
     `;
+  
+    if(align == 'old'){
+      getReviewListQuery += ' createdAt ASC;';
+    }
+  else if(align == 'new'){
+      getReviewListQuery += ' createdAt DESC;';
+  }
+  else {
+    getReviewListQuery += ' likeNum DESC;';
+  }
   const getRows = await connection.query(getReviewListQuery, eid);
 
   return getRows[0];
 };
 
 
-export async function getMReviewList(connection, eid, uid){
-  const getReviewListQuery = `
+export async function getMReviewList(connection, eid, uid, align){
+  var getReviewListQuery = `
       Select * , (select count(*) from ReviewLikeTBL where ReviewLikeTBL.visitedID = UserVisitedTBL.visitedID) as likeNum, 
       (select count(*) from ReviewLikeTBL where ReviewLikeTBL.visitedID = UserVisitedTBL.visitedID and userID = ?) as isUserLiked
-      from UserVisitedTBL where eventID = ? and isPrivate = 0 and star != -1;
-    `;
+      from UserVisitedTBL where eventID = ? and isPrivate = 0 and star != -1 ORDER BY `;
+
+  if(align == 'old'){
+    getReviewListQuery += ' createdAt ASC;';
+  }
+else if(align == 'new'){
+    getReviewListQuery += ' createdAt DESC;';
+}
+else {
+  getReviewListQuery += ' likeNum DESC;';
+}
   const getRows = await connection.query(getReviewListQuery, [uid, eid]);
 
   return getRows[0];
