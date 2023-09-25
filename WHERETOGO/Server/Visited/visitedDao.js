@@ -193,7 +193,7 @@ export async function getComStarInfo(connection, eid, cid){
   var getComStarInfoQuery = 
   `select sum(star)/count(*) as totalStar from UserVisitedTBL where isPrivate = 0 and star != -1 and eventID = ${eid}`;
 
-  if(cid != ':companionID') getComStarInfoQuery += ` and companionID = ${cid} `;
+  if((cid >= 1)&&(cid <= 5)) getComStarInfoQuery += ` and companionID = ${cid} `;
 
   getComStarInfoQuery += ` ; `;
 
