@@ -79,13 +79,15 @@ export async function setReview (req, res) {
     const checkVisitedResults = await visitedProvider.checkVisitedList(userIdFromJWT, eventID);
     if(checkVisitedResults == 0) return res.send(errResponse(baseResponse.EVENT_NOT_VISITED));
 
+    const getVisitedIDResults = await visitedProvider.getVisitedID(userIdFromJWT, eventID);
+
     var picList = [null, null, null, null, null, null, null, null, null, null];
 
     for(let i = 0; req.files[i]; i++) picList[i] = `http://localhost:3000/images/visited/${req.files[i].filename}`;
     
     const insertReviewResults = await visitedServicer.insertReview(eventID, userIdFromJWT, star, companionID, picList, review, isPrivate);
 
-    return res.send(response(baseResponse.SUCCESS));
+    return res.send(response(baseResponse.SUCCESS, getVisitedIDResults));
 }
 
 export async function deleteReview (req, res) {    

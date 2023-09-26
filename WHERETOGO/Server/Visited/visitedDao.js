@@ -113,6 +113,16 @@ const getRows = await connection.query(checkVisitedEventsQuery, [uid, eid]);
 return getRows[0];
 };
 
+export async function getVisitedIDRow(connection, uid, eid){
+
+  const getVisitedIDRowQuery = `
+      select visitedID  from UserVisitedTBL where userID = ? and eventID = ?; 
+    `;
+  const getRows = await connection.query(getVisitedIDRowQuery, [uid, eid]);
+  
+  return getRows[0];
+  };
+
 export async function checkIfPrivate(connection, vid){
 
   const checkIfIsPrivateQuery = `

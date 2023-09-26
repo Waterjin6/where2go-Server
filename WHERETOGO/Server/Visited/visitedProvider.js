@@ -36,6 +36,15 @@ export async function checkVisitedList(uid, eid) {
     return getResult[0].isVisited;
 };
 
+
+export async function getVisitedID(uid, eid) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const getResult = await visitedDao.getVisitedIDRow(connection, uid, eid);
+    connection.release();
+  
+    return getResult[0];
+};
+
 export async function checkIsPrivate(vid) {
     const connection = await pool.getConnection(async (conn) => conn);
     const getResult = await visitedDao.checkIfPrivate(connection, vid);
