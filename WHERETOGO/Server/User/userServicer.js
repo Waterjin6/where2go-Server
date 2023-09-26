@@ -127,7 +127,7 @@ export async function postSignIn (email, password) {
             } // 유효 기간 30일
         );
 
-        return response(baseResponse.SUCCESS, {'userId': userInfoRows[0].userIdx, 'jwt': token});
+        return response(baseResponse.SUCCESS, {'userId': userInfoRows[0].userIdx, 'sex': userInfoRows[0].sex, 'age': userInfoRows[0].age,'jwt': token});
 
     } catch (err) {
         logger.error(`App - postSignIn Service error\n: ${err.message} \n${JSON.stringify(err)}`);

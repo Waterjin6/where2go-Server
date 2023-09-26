@@ -27,7 +27,7 @@ export async function selectUserEmail(connection, email) {
 // 유저 계정 상태 체크 (jwt 생성 위해 id 값도 가져온다.)
 export async function selectUserAccount(connection, email) {
   const selectUserAccountQuery = `
-        SELECT userID
+        SELECT userID, sex, age
         FROM UserTBL 
         WHERE email = ?;`;
   const selectUserAccountRow = await connection.query(
