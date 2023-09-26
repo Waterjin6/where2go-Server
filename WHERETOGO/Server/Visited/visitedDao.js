@@ -37,7 +37,7 @@ export async function getVEventRow(connection, uid){
 export async function getAReviewRow(connection, vid){
   
   const getAReviewQuery = `
-      Select * , (select count(*) from ReviewLikeTBL where visitedID = ?) as likeNum, (select 0) as isUserLiked
+      Select * , (select eventName from EventTBL where UserVisitedTBL.eventID = EventTBL.eventID ) as eventName, (select count(*) from ReviewLikeTBL where visitedID = ?) as likeNum, (select 0) as isUserLiked
       from UserVisitedTBL where visitedID = ?;
     `;
   const getRows = await connection.query(getAReviewQuery, [vid, vid]);
@@ -49,7 +49,7 @@ export async function getAReviewRow(connection, vid){
 export async function getMAReviewRow(connection, vid, uid){
   
   const getAReviewQuery = `
-      Select * , (select count(*) from ReviewLikeTBL where visitedID = ?) as likeNum, 
+      Select * , (select eventName from EventTBL where UserVisitedTBL.eventID = EventTBL.eventID ) as eventName, (select count(*) from ReviewLikeTBL where visitedID = ?) as likeNum, 
       (select count(*) from ReviewLikeTBL where visitedID = ? and userID = ?) as isUserLiked
       from UserVisitedTBL where visitedID = ?;
     `;
