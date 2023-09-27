@@ -64,7 +64,7 @@ export async function getSearchRow(connection, search, kind, fromD, toD, aCode, 
         qr += ' and price like \'\%무료\%\' ';
     }
 
-    if((kind)&&(kind != "111111111111111")){
+    if((kind)&&(kind != "111111111111111")&&(kind != "000000000000000")){
         var kindExist = 0;
 
         if(beforeExist == 1)qr += ' and ';
