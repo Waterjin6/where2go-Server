@@ -18,21 +18,6 @@ export async function getVisitedEventRow(connection, uid){
   return getRows[0];
 };
 
-export async function getVEventRow(connection, uid){
-  
-  const getVisitedEventsQuery = `
-      Select eventID, eventName, (select cName from CategoryTBL where CategoryTBL.cCode = EventTBL.kind) as kind, 
-      startDate, endDate,  
-      (select pic1 from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID and UserVisitedTBL.userID = ?) as userPic,
-      (Select ifnull (userPic, EventTBL.pic)) as pic, 
-      ( select count(*) from UserSavedTBL where UserSavedTBL.eventID = EventTBL.eventID) as savedNum,
-      (select count(*) from UserVisitedTBL where UserVisitedTBL.eventID = EventTBL.eventID)as visitedNum 
-      from EventTBL where eventID in (SELECT eventID from UserVisitedTBL where userID = ?);
-    `;
-  const getRows = await connection.query(getVisitedEventsQuery, [uid,uid]);
-
-  return getRows[0];
-};
 
 export async function getAReviewRow(connection, vid){
   
@@ -190,8 +175,8 @@ else {
 export async function getComVisitInfo(connection, eid){
   const getComVisitInfo = `
   Select companionID, (select content from companionTBL where cpID = companionID)as companion_Name, 
-  count(*) / (select count(*) from UserVisitedTBL where eventID = 2569685 and isPrivate = 0 and star != -1) as com_visit_rate
-  from UserVisitedTBL where eventID = ? and isPrivate = 0 and star != -1 group by companionID ORDER BY com_visit_rate DESC;
+  count(*) / (select count(*) from UserVisitedTBL where eventID = 2569685) as com_visit_rate
+  from UserVisitedTBL where eventID = ? group by companionID ORDER BY com_visit_rate DESC;
     `;
   const getRows = await connection.query(getComVisitInfo, eid);
 
@@ -201,7 +186,7 @@ export async function getComVisitInfo(connection, eid){
 export async function getComStarInfo(connection, eid, cid){
 
   var getComStarInfoQuery = 
-  `select sum(star)/count(*) as totalStar from UserVisitedTBL where isPrivate = 0 and star != -1 and eventID = ${eid}`;
+  `select sum(star)/count(*) as totalStar from UserVisitedTBL where eventID = ${eid}`;
 
   if((cid >= 1)&&(cid <= 5)) getComStarInfoQuery += ` and companionID = ${cid} `;
 
