@@ -22,7 +22,9 @@ export async function getVisitedEventRow(connection, uid){
 export async function getAReviewRow(connection, vid){
   
   const getAReviewQuery = `
-      Select * , (select eventName from EventTBL where UserVisitedTBL.eventID = EventTBL.eventID ) as eventName, (select count(*) from ReviewLikeTBL where visitedID = ?) as likeNum, (select 0) as isUserLiked
+      Select * ,
+      (select nickName from UserTBL where UserVisitedTBL.userID = UserTBL.userID) as nickName, 
+      (select eventName from EventTBL where UserVisitedTBL.eventID = EventTBL.eventID ) as eventName, (select count(*) from ReviewLikeTBL where visitedID = ?) as likeNum, (select 0) as isUserLiked
       from UserVisitedTBL where visitedID = ?;
     `;
   const getRows = await connection.query(getAReviewQuery, [vid, vid]);
@@ -34,7 +36,9 @@ export async function getAReviewRow(connection, vid){
 export async function getMAReviewRow(connection, vid, uid){
   
   const getAReviewQuery = `
-      Select * , (select eventName from EventTBL where UserVisitedTBL.eventID = EventTBL.eventID ) as eventName, (select count(*) from ReviewLikeTBL where visitedID = ?) as likeNum, 
+      Select * ,
+      (select nickName from UserTBL where UserVisitedTBL.userID = UserTBL.userID) as nickName, 
+      (select eventName from EventTBL where UserVisitedTBL.eventID = EventTBL.eventID ) as eventName, (select count(*) from ReviewLikeTBL where visitedID = ?) as likeNum, 
       (select count(*) from ReviewLikeTBL where visitedID = ? and userID = ?) as isUserLiked
       from UserVisitedTBL where visitedID = ?;
     `;
@@ -132,7 +136,9 @@ export async function getWriterID(connection, vid){
 
 export async function getReviewList(connection, eid, align){
   var getReviewListQuery = `
-      Select * , (select count(*) from ReviewLikeTBL where ReviewLikeTBL.visitedID = UserVisitedTBL.visitedID) as likeNum, 
+      Select * , 
+      (select nickName from UserTBL where UserVisitedTBL.userID = UserTBL.userID) as nickName, 
+      (select count(*) from ReviewLikeTBL where ReviewLikeTBL.visitedID = UserVisitedTBL.visitedID) as likeNum, 
       (select 0) as isUserLiked 
       from UserVisitedTBL where eventID = ? and isPrivate = 0 and star != -1 ORDER BY
     `;
@@ -154,7 +160,9 @@ export async function getReviewList(connection, eid, align){
 
 export async function getMReviewList(connection, eid, uid, align){
   var getReviewListQuery = `
-      Select * , (select count(*) from ReviewLikeTBL where ReviewLikeTBL.visitedID = UserVisitedTBL.visitedID) as likeNum, 
+      Select * , 
+      (select nickName from UserTBL where UserVisitedTBL.userID = UserTBL.userID) as nickName, 
+      (select count(*) from ReviewLikeTBL where ReviewLikeTBL.visitedID = UserVisitedTBL.visitedID) as likeNum, 
       (select count(*) from ReviewLikeTBL where ReviewLikeTBL.visitedID = UserVisitedTBL.visitedID and userID = ?) as isUserLiked
       from UserVisitedTBL where eventID = ? and isPrivate = 0 and star != -1 ORDER BY `;
 
@@ -174,11 +182,11 @@ else {
 
 export async function getComVisitInfo(connection, eid){
   const getComVisitInfo = `
-  Select companionID, (select content from companionTBL where cpID = companionID)as companion_Name, 
-  count(*) / (select count(*) from UserVisitedTBL where eventID = 2569685) as com_visit_rate
-  from UserVisitedTBL where eventID = ? group by companionID ORDER BY com_visit_rate DESC;
-    `;
-  const getRows = await connection.query(getComVisitInfo, eid);
+  Select cpID as companionID, content as companion_Name, 
+  (select count(*) from UserVisitedTBL where eventID = ? and star != -1 and UserVisitedTBL.companionID = CompanionTBL.cpID) / (select count(*) from UserVisitedTBL where eventID = ? and star != -1) as com_visit_rate
+  from CompanionTBL;
+      `;
+  const getRows = await connection.query(getComVisitInfo, [eid,eid]);
 
   return getRows[0];
 };
