@@ -6,13 +6,13 @@ import {response, errResponse} from "../config/response.js";
 
 export async function getSearch (req, res) {
 
-    const {search, kind, fromD, toD, aCode, aDCode, free, align} = req.query;
+    const {search, kind, fromD, toD, aCode, aDCode, free, align, pageNo, pageSize} = req.query;
 
     if (search) {
         const updateResults = await searchServicer .updateSearch(search);
     }
 
-    const getSearchResults = await searchProvider.getSavedList(search, kind, fromD, toD, aCode, aDCode, free, align);
+    const getSearchResults = await searchProvider.getSavedList(search, kind, fromD, toD, aCode, aDCode, free, align, pageNo, pageSize);
 
     if(!getSearchResults) return res.send(errResponse(baseResponse.SAVED_EVENTS_GET_ERROR));
 

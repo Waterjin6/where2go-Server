@@ -11,9 +11,9 @@ export async function getHot() {
     return getResult;
 };
 
-export async function getSavedList(search, kind, fromD, toD, aCode, aDCode, free, align) {
+export async function getSavedList(search, kind, fromD, toD, aCode, aDCode, free, align, pageNo, pageSize) {
     const connection = await pool.getConnection(async (conn) => conn);
-    const getResult = await searchDao.getSearchRow(connection, search, kind, fromD, toD, aCode, aDCode, free, align);
+    const getResult = await searchDao.getSearchRow(connection, search, kind, fromD, toD, aCode, aDCode, free, align, pageNo, pageSize);
     connection.release();
   
     return getResult;

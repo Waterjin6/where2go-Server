@@ -1,4 +1,4 @@
-export async function getSearchRow(connection, search, kind, fromD, toD, aCode, aDCode, free, align){
+export async function getSearchRow(connection, search, kind, fromD, toD, aCode, aDCode, free, align, pageNo, pageSize){
   
     var qr = `
         select eventID, eventName, (select cName from CategoryTBL where cCode = EventTBL.kind) as kind, 
@@ -86,15 +86,21 @@ export async function getSearchRow(connection, search, kind, fromD, toD, aCode, 
     qr += ' ORDER BY ';
                         
     if(align == 'start'){
-        qr += ' startDate ASC;';
+        qr += ' startDate ASC ';
     }
     else if(align == 'end'){
-        qr += ' endDate ASC;';
+        qr += ' endDate ASC ';
     }
     else {
-        qr+= ' savedNum DESC;';
+        qr+= ' savedNum DESC';
     }
 
+    if(pageNo && pageSize){
+        var pN = (pageNo - 1)*pageSize;
+        qr += ` limit ${pN}, ${pageSize} `;
+    }
+    qr += " ;";
+    
     const getRows = await connection.query(qr);
   
     return getRows[0];

@@ -1,11 +1,9 @@
 import request from 'request';
-import db from "./config/dbConnection.js";
+import db from "./config/database.js";
 import fs from 'fs';
-//419개까지 넣음 / 22-09-07 업데이트
-//446개까지 넣음 / 22-09-14 업데이트
 const serviceKey ="eqgDjMToxJ5qj73QdQ2jGIjirsbAeSH5JzYAeFqaf4EJq6TGC5fvt%2BPSkBXhFsGNXDlazYTP9Pt1yjj1UJV2dg%3D%3D";
 const numOfRows = 1;
-const eventStartDate = "20230606";
+const eventStartDate = "20230824";
 
 
 const pageNo = 1;
@@ -17,7 +15,7 @@ var eventID, eventName, startDate, endDate; // NOT NULL
 
 var addr1,addr2,kind ,pic, mapx, mapy , mlevel , areacode , sigungucode , tel , homepage, overview, eventplace , bookingplace , subevent , price, agelimit, eventtime;  
 
-function getLastAmount(){
+/*function getLastAmount(){
   return new Promise((res, rej) => {
     db.query("select count(*) as count from EventTBL;", (err, results) => {             
       if(err) {
@@ -27,7 +25,7 @@ function getLastAmount(){
       }
   });  
   });
-}
+}*/
 
 var getTotal = {
   'method': 'GET',
@@ -211,10 +209,11 @@ function makeDqr(eventID){
 async function getEveryEvent(){
   const totalN = await getTotalNum();
 
-  const lastIdx = await getLastAmount(); //현재 DB의 총 이벤트 수 
+  //const lastIdx = await getLastAmount(); //현재 DB의 총 이벤트 수 
 
-  const amount = totalN - lastIdx;
+  //const amount = totalN - lastIdx;
 
+  const amount = totalN;
   var i = pageNo;
 
   for (; i <= totalN; i++){
